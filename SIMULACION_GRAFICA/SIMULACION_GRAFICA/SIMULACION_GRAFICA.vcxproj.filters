@@ -18,5 +18,8 @@
     <ClCompile Include="Main1.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="main3.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
