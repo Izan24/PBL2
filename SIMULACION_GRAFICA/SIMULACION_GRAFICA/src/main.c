@@ -11,14 +11,15 @@ struct connection {
 	float cost; // the cost of the connection.
 };
 
-typedef struct point{ // Normal points
+typedef struct nde{ // Normal points
 	TYPE pointType; // True == crosswalk, False == Not crosswalk.
 	char title[MAX_STR];
 	int x; // x coord.
 	int y; // y coord.
 	int id;
+	int connectionN;
 	struct connection connections[MAX_CONNECTIONS];
-}POINT, *PPOINT;
+}NODEPOINT, *PNODEPOINT;
 
 
 typedef struct map {
