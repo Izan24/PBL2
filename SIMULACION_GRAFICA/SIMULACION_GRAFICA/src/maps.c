@@ -1,5 +1,12 @@
 #include "general.h"
 #include "maps.h"
+#include "JSON-C/json.h"
+
+MAP* loadMap() {
+    MAP* map = (MAP*)malloc(sizeof(MAP));
+    char* filename = mapFileName();
+    char* unparsedJson = readJSON(filename);
+}
 
 char* mapFileName() { // Opens a dialog box to select a file and returns its name along with its path.
     CHAR filename[MAX_PATH];
@@ -39,5 +46,27 @@ INT ChooseProgram(CHAR* FileName) { // Uses windows.h function GetOpenFileName t
     return 1;
 }
 
+char* readJSON(char * FileName) {
+    char aux[MAX_STR];
+    char* buffer = (char*)malloc(sizeof(char)*65536);
+    FILE* fileJSON = fopen(FileName, "r");
+    fread(buffer, sizeof(char), 65536, fileJSON);
+    fclose(fileJSON);
+    return buffer;
+}
+
+void printMap(MAP* map) {
+    printf("\nName: %s", map->mapName);
+    printf("\nPoint Amounts: %d", map->nodePointAmount);
+    for (int i = 0; i < map->nodePointAmount; i++) {
+        printf("\n\tID: %s", map->points[i].id);
+        printf("\n\tPoint Type: %s", map->points[i].pointType);
+        if (map->points[i].pointType == INTEREST) printf("\n\tTitle: %s", map->points[i].title);
+        printf("\n\tConnection number: %d", map->points[i].connectionN);
+        for (int j = 0; j < map->points[i].connectionN; j++) {
+            printf("\n\t\tConnected to point ID: %d", map->points[i].connections[j].id);
+        }
+    }
+}
 
 
