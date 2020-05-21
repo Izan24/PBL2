@@ -1,6 +1,7 @@
 #include "general.h"
 #include "maps.h"
 
+
 char* mapFileName() { // Opens a dialog box to select a file and returns its name along with its path.
     CHAR filename[MAX_PATH];
 	int i = 0, count=0, counterZeros=0;

@@ -1,30 +1,43 @@
+#include <stdio.h>
 #include "general.h"
 #include "maps.h"
+#include "sdlDefine.h"
+#include "graphics.h"
 
 int main() {
 
-	printf("%s", mapFileName());
+
+    /*printf("%s", mapFileName());*/
+
+    sdl_init();
+
+
+    SDL_Event event;
+    BOOL closeRequested = FALSE;
+    SDL_Texture* bg = bg_init("resources/images/backgrounds/MutrikuIMGwith_NODES.png");
+
+    while (closeRequested == FALSE)
+    {
+
+        SDL_RenderClear(rend);
+
+        SDL_RenderCopy(rend, bg, NULL, NULL);
+        SDL_RenderDrawLine(rend, 0, 0, 680, 384);
+
+        SDL_RenderPresent(rend);
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
+                closeRequested = TRUE;
+                sdl_destroy();
+            }
+        }
+    }
+
+
+    getchar();
+    return 0;
 }
-
-struct connection {
-	int id; // the Id of the point which is connected to.
-	float cost; // the cost of the connection.
-};
-
-typedef struct point{ // Normal points
-	TYPE pointType; // True == crosswalk, False == Not crosswalk.
-	char title[MAX_STR];
-	int x; // x coord.
-	int y; // y coord.
-	int id;
-	struct connection connections[MAX_CONNECTIONS];
-}POINT, *PPOINT;
-
-
-typedef struct map {
-	char IMGPath[MAX_PATH]; // The location of the IMG on the PC.
-	char mapName[MAX_STR]; // The nanme of the file that we are using.
-	POINT points[300]; // All the coordinates of the points.
-	int nodePointAmount; // Points that are connected int he map.
-}MAP;
 
