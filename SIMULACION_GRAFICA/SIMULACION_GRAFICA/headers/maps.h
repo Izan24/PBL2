@@ -22,12 +22,16 @@ typedef struct map {
 	char IMGPath[MAX_PATH]; // The location of the IMG on the PC.
 	char mapName[MAX_STR]; // The nanme of the file that we are using.
 	NODEPOINT points[300]; // All the coordinates of the points.
-	int nodePointAmount; // Points that are connected int he map.
+	int nodePointAmount; // Points that are connected int he map->
 }MAP;
 
-
+MAP* loadMap();
 char* mapFileName();
-INT ChooseProgram(CHAR* FileName);
+CHAR* ChooseProgram();
+char* readJSON(char* FileName);
+void printMap(MAP* map);
+MAP* parseJSON(char* buffer);
+
 
 
 #endif // !MAPS_H

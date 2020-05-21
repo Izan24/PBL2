@@ -3,7 +3,7 @@
 
 int main() {
 
-	printf("%s", mapFileName());
+	printMap(loadMap());
 }
 
 
