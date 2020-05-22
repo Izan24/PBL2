@@ -13,6 +13,11 @@ typedef enum type{NODE, CROSSWALK, INTEREST}TYPE;
 #include <stdio.h>
 #include <windows.h>
 #include <commdlg.h>
+#include "sdlDefine.h"
+#include "maps.h"
+#include "algorithm.h"
+#include "graphics.h"
+
 
 
 #endif // GENERAL_H

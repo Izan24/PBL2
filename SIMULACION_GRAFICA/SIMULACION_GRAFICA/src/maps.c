@@ -3,7 +3,7 @@
 #include "maps.h"
 
 
-MAP* loadMap() {
+MAP* loadMap() { // This function loads the map using the other functions bellow
 	MAP* map = (MAP*)malloc(sizeof(MAP));
 	char* filename = mapFileName();
 	char* unparsedJson = readJSON(filename);

@@ -7,12 +7,12 @@
 
 void draw_line_to(LINE line)
 {
-    SDL_SetRenderDrawColor(rend, 255, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawLine(rend, line.x1, line.y1, line.x2, line.y2);
+    SDL_SetRenderDrawColor(rend, 0, 0, 255, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawLine(rend, line.x0, line.y0, line.x1, line.y1);
 }
 
 
-SDL_Texture* bg_init(char* img) {
+SDL_Texture* bg_init(const char* img) {
 
     SDL_Surface* surface;
     SDL_Texture* bg;

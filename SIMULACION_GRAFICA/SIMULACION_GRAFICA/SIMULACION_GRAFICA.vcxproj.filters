@@ -21,6 +21,9 @@
     <ClCompile Include="src\sdlInit.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\algorithm.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\general.h">
@@ -33,6 +36,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\sdlDefine.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\algorithm.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

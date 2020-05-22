@@ -2,9 +2,18 @@
 #define MAPS_H
 
 
+typedef struct line {
+	int x0; // First point of the line (x axis)
+	int x1; // Second point of the line (x axis)
+	int y0; // First point of the line (x axis)
+	int y1; // Second point of the line (y axis)
+	float cost; // The cost of moving through this lince
+}LINE;
+
 struct connection {
 	int id; // the Id of the point which is connected to.
-	float cost; // the cost of the connection.
+	float cost;
+	LINE lineTo;
 };
 
 typedef struct node { // Normal points
