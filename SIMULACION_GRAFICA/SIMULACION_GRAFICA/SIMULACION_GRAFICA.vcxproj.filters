@@ -15,10 +15,10 @@
     <ClCompile Include="src\maps.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="headers\sdlInit.c">
+    <ClCompile Include="src\graphics.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics.c">
+    <ClCompile Include="src\sdlInit.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,10 @@
     <ClInclude Include="headers\maps.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="headers\sdlDefine.h">
+    <ClInclude Include="headers\graphics.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="headers\graphics.h">
+    <ClInclude Include="headers\sdlDefine.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
