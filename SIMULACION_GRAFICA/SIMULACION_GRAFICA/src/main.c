@@ -11,6 +11,8 @@ int main() {
 
     sdl_init();
 
+    // RANDOM TU
+
 
     SDL_Event event;
     BOOL closeRequested = FALSE;
