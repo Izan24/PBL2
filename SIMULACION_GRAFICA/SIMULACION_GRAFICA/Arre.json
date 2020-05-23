@@ -1,7 +1,6 @@
 {
    "mapName":"Arre",
    "IMGPath":"./IMG/ArreIMG.png",
-   "nodePointAmount":70,
   "points": [
     {
       "pointType": "Interest",
@@ -90,17 +89,15 @@
       "id": 5,
       "connections": [
         {
-          "id": 0
-        },
-        {
           "id": 4
         },
         {
-          "id": 2
+          "id": 46
         },
         {
-          "id": 6
+          "id": 47
         }
+        
       ]
     },
     {
@@ -181,8 +178,8 @@
     {
       "pointType": "Crosswalk",
       "title": "Node",
-      "x": 345,
-      "y": 177,
+      "x": 347,
+      "y": 174,
       "id": 10,
       "connections": [
         {
@@ -210,10 +207,10 @@
           "id": 68
         },
         {
-          "id": 13
+          "id": 9
         },
         {
-          "id": 11
+          "id": 41
         },
         {
           "id": 10
@@ -307,28 +304,28 @@
           "id": 17
         },
         {
-          "id": 16
+          "id": 42
         }
       ]
     },
     {
       "pointType": "Crosswalk",
       "title": "Node",
-      "x": 347,
-      "y": 161,
+      "x": 465,
+      "y": 203,
       "id": 17,
       "connections": [
         {
-          "id": 3
+          "id": 18
         },
         {
-          "id": 13
+          "id": 15
         },
         {
-          "id": 11
+          "id": 16
         },
         {
-          "id": 10
+          "id": 26
         }
       ]
     },
@@ -387,8 +384,8 @@
     {
       "pointType": "Crosswalk",
       "title": "Node",
-      "x": 347,
-      "y": 161,
+      "x": 588,
+      "y": 241,
       "id": 21,
       "connections": [
         {
@@ -440,9 +437,9 @@
     },
     {
       "pointType": "Interest",
-      "title": "Hilerria",
-      "x": 347,
-      "y": 161,
+      "title": "Cementerio",
+      "x": 640,
+      "y": 206,
       "id": 24,
       "connections": [
         {
@@ -574,9 +571,6 @@
         },
         {
           "id": 33
-        },
-        {
-          "id": 10
         }
       ]
     },
@@ -697,8 +691,8 @@
     {
       "pointType": "Crosswalk",
       "title": "Node",
-      "x": 347,
-      "y": 161,
+      "x": 351,
+      "y": 287,
       "id": 38,
       "connections": [
         {
@@ -753,7 +747,7 @@
           "id": 39
         },
         {
-          "id": 32
+          "id": 44
         }
       ]
     },
@@ -837,13 +831,13 @@
           "id": 43
         },
         {
-          "id": 44
+          "id": 40
         }
       ]
     },
     {
       "pointType": "Interest",
-      "title": "Eliza",
+      "title": "Iglesia",
       "x": 303,
       "y": 334,
       "id": 45,
@@ -874,7 +868,7 @@
     {
       "pointType": "Node",
       "title": "Node",
-      "x": 183,
+      "x": 138,
       "y": 313,
       "id": 47,
       "connections": [
@@ -888,7 +882,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Ibaiko igerilekua",
+      "title": "Zona de bañistas",
       "x": 192,
       "y": 347,
       "id": 48,
@@ -919,8 +913,8 @@
     {
       "pointType": "Node",
       "title": "Node",
-      "x": 347,
-      "y": 161,
+      "x": 168,
+      "y": 405,
       "id": 50,
       "connections": [
         {
@@ -987,7 +981,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Botika",
+      "title": "Farmacia",
       "x": 275,
       "y": 427,
       "id": 54,
@@ -1011,7 +1005,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Futbol zelaia",
+      "title": "Campo de futbol",
       "x": 283,
       "y": 559,
       "id": 56,
@@ -1062,7 +1056,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Mediku kontsulta",
+      "title": "Consultorio medico",
       "x": 346,
       "y": 428,
       "id": 59,
@@ -1077,7 +1071,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Udala",
+      "title": "Ayuntamiento",
       "x": 318,
       "y": 402,
       "id": 60,
@@ -1158,7 +1152,7 @@
     },
     {
       "pointType": "Interest",
-      "title": "Node",
+      "title": "Tienda Los Navarros",
       "x": 1013,
       "y": 508,
       "id": 65,
@@ -1180,6 +1174,9 @@
         },
         {
           "id": 15
+        },
+        {
+          "id": 67
         }
       ]
     },
@@ -1217,23 +1214,14 @@
       ]
     },
     {
-      "pointType": "Node",
-      "title": "Node",
-      "x": 347,
-      "y": 161,
+      "pointType": "Interest",
+      "title": "Bar parrilla",
+      "x": 254,
+      "y": 354,
       "id": 69,
       "connections": [
         {
-          "id": 3
-        },
-        {
-          "id": 13
-        },
-        {
-          "id": 11
-        },
-        {
-          "id": 10
+          "id": 46
         }
       ]
     },
