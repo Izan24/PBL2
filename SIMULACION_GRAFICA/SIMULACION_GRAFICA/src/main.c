@@ -11,7 +11,7 @@ int main() {
 
     sdl_init();
 
-    // RANDOM TU
+    // RANDOM.heiko
 
 
     SDL_Event event;
