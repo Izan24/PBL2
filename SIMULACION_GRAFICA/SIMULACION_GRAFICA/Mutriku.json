@@ -1195,8 +1195,8 @@
       {
          "pointType":"Node",
          "title":"Node",
-         "x":1360,
-         "y":768,
+         "x":1067,
+         "y":199,
          "id":71,
          "connectionN":2,
          "connections":[
@@ -1345,7 +1345,7 @@
                "id":79
             },
             {
-               "id":80
+               "id":81
             }
          ]
       },
@@ -1544,7 +1544,7 @@
          "pointType":"Interest",
          "title":"Ayuntamiento",
          "x":629,
-         "y":428,
+         "y":482,
          "id":92,
          "connectionN":2,
          "connections":[
@@ -1576,13 +1576,17 @@
             {
                "id":32
             }
+            ,
+            {
+               "id":161
+            }
          ]
       },
       {
          "pointType":"Node",
          "title":"Node",
          "x":623,
-         "y":429,
+         "y":492,
          "id":94,
          "connectionN":2,
          "connections":[
@@ -2549,7 +2553,7 @@
          "connectionN":3,
          "connections":[
             {
-               "id":1459
+               "id":149
             },
             {
                "id":151

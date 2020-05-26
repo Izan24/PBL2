@@ -5,6 +5,7 @@
 #define MAX_CONNECTIONS 10
 #define WINDOW_WIDTH (1360)
 #define WINDOW_HEIGHT (768)
+#define MAX_NODE (300)
 
 typedef enum boolean{FALSE, TRUE}BOOL;
 typedef enum type{NODE, CROSSWALK, INTEREST}TYPE;
