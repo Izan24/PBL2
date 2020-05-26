@@ -25,3 +25,5 @@ SDL_Texture* bg_init(const char* img) {
 
     return bg;
 }
+
+
