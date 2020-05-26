@@ -345,4 +345,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+<<<<<<< HEAD
 SIMULACION_GRAFICA/.vs/SIMULACION_GRAFICA/v16/Browse.VC.db
+=======
+
+#Disgustin error shit
+*.VC.db
+>>>>>>> master

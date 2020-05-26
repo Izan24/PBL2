@@ -4,6 +4,7 @@
 int main() {
 
 
+<<<<<<< HEAD
     /*printf("%s", mapFileName());*/
 
     MAP* map = loadMap();
@@ -47,6 +48,8 @@ int main() {
         }
     }*/
     //}
+=======
+>>>>>>> master
 
 
     getchar();
