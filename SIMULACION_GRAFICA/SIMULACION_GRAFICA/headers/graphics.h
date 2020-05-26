@@ -2,9 +2,10 @@
 #define GRAPHICS_H
 
 
-void draw_line_to(LINE line);
+void drawLineTo(LINE line, int red, int green, int blue); // Draw a line 
 
-SDL_Texture* bg_init(char* img); //Returns a pointer to the Background
+SDL_Texture* bgInit(const char* img); //Returns a pointer to the Background
 
+void drawThiccLine(LINE line); // Draw a THICC line
 
 #endif // !GRAPHICS_H

@@ -7,7 +7,7 @@ int main() {
     /*printf("%s", mapFileName());*/
 
     MAP* map = loadMap();
-    LINE lineas[2000];
+    LINE lines[2000];
 
     sdl_init();
 
@@ -16,29 +16,36 @@ int main() {
 
     SDL_Event event;
     BOOL closeRequested = FALSE;
-    //SDL_Texture* bg = bg_init("/resources/images/backgrounds/MutrikuIMG.png");
-    SDL_Texture* bg = bg_init("Arre.jpg");
+    //SDL_Texture* bg = bg_init("/resources/images/backgrounds/MutrikuIMG.png")/*;*/
+    SDL_Texture* bg = bgInit("Mutriku.png");
 
     /*while (closeRequested == FALSE)
     {*/
 
-        SDL_RenderClear(rend);
-        SDL_RenderCopy(rend, bg, NULL, NULL);
+    SDL_RenderClear(rend);
+    SDL_RenderCopy(rend, bg, NULL, NULL);
+    SDL_RenderPresent(rend);
+    for (int i = 0; i < getLines(lines, map); i++) {
+        drawLineTo(lines[i], 0, 0, 255);
         SDL_RenderPresent(rend);
-        for (int i = 0; i < getLines(lineas, map); i++) {
-            draw_line_to(lineas[i]);
-            SDL_RenderPresent(rend);
-        }
+    }
 
+    NODEPOINT* startPrueba;
+    NODEPOINT* endPrueba;
 
-        /*while (SDL_PollEvent(&event))
+    startPrueba = &map->points[15];
+    endPrueba = &map->points[80];
+
+    execAlgorithm(map, lines, startPrueba, endPrueba);
+
+    /*while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT)
         {
-            if (event.type == SDL_QUIT)
-            {
-                closeRequested = TRUE;
-                sdl_destroy();
-            }
-        }*/
+            closeRequested = TRUE;
+            sdl_destroy();
+        }
+    }*/
     //}
 
 
