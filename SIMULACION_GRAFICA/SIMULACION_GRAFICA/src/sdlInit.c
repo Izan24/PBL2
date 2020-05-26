@@ -50,5 +50,7 @@ int sdl_destroy()
         SDL_DestroyWindow(window);
     }
 
-    return 1;
+    SDL_QUIT;
+
+    return 0;
 }

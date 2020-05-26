@@ -27,9 +27,13 @@ SDL_Texture* bgInit(const char* img)
     return bg;
 }
 
+<<<<<<< HEAD
+
+=======
 void drawThiccLine(LINE line){
     SDL_SetRenderDrawColor(rend, 255, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderDrawLine(rend, line.x0+1, line.y0+1, line.x1+1, line.y1+1);
     SDL_RenderDrawLine(rend, line.x0, line.y0, line.x1, line.y1);
     SDL_RenderDrawLine(rend, line.x0-1, line.y0-1, line.x1-1, line.y1-1);
 }
+>>>>>>> master

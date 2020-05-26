@@ -8,4 +8,5 @@ SDL_Texture* bgInit(const char* img); //Returns a pointer to the Background
 
 void drawThiccLine(LINE line); // Draw a THICC line
 
+
 #endif // !GRAPHICS_H

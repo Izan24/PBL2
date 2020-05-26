@@ -18,6 +18,7 @@ typedef enum type{NODE, CROSSWALK, INTEREST}TYPE;
 #include "maps.h"
 #include "algorithm.h"
 #include "graphics.h"
+#include "userInterface.h"
 
 
 

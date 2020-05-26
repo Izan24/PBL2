@@ -30,8 +30,13 @@ typedef struct node { // Normal points
 
 typedef struct map {
 	char IMGPath[MAX_PATH]; // The location of the IMG on the PC.
+<<<<<<< HEAD
+	char mapName[MAX_STR]; // The name of the file that we are using.
+	NODEPOINT points[300]; // All the coordinates of the points.
+=======
 	char mapName[MAX_STR]; // The nanme of the file that we are using.
 	NODEPOINT points[MAX_NODE]; // All the coordinates of the points.
+>>>>>>> master
 	int nodePointAmount; // Points that are connected int he map->
 }MAP;
 

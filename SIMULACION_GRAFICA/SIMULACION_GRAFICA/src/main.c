@@ -3,13 +3,21 @@
 
 int main() {
 
+<<<<<<< HEAD
+
+
+=======
     /*printf("%s", mapFileName());*/
 
     MAP* map = loadMap();
     LINE lines[2000];
+>>>>>>> master
 
-    sdl_init();
+	
 
+<<<<<<< HEAD
+	
+=======
     // RANDOM TU
 
 
@@ -49,5 +57,6 @@ int main() {
 
     getchar();
     return 0;
+>>>>>>> master
 }
 

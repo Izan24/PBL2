@@ -24,6 +24,7 @@
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\maps.c" />
     <ClCompile Include="src\sdlInit.c" />
+    <ClCompile Include="src\userInterface.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\algorithm.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="headers\graphics.h" />
     <ClInclude Include="headers\maps.h" />
     <ClInclude Include="headers\sdlDefine.h" />
+    <ClInclude Include="headers\userInterface.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
