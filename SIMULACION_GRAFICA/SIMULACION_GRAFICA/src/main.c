@@ -3,8 +3,6 @@
 
 int main() {
 
-
-<<<<<<< HEAD
     /*printf("%s", mapFileName());*/
 
     MAP* map = loadMap();
@@ -18,7 +16,7 @@ int main() {
     SDL_Event event;
     BOOL closeRequested = FALSE;
     //SDL_Texture* bg = bg_init("/resources/images/backgrounds/MutrikuIMG.png")/*;*/
-    SDL_Texture* bg = bgInit("Mutriku.png");
+    SDL_Texture* bg = bgInit("MutrikuIMG.png");
 
     /*while (closeRequested == FALSE)
     {*/
@@ -48,9 +46,6 @@ int main() {
         }
     }*/
     //}
-=======
->>>>>>> master
-
 
     getchar();
     return 0;
