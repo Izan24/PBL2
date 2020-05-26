@@ -34,3 +34,4 @@ int getLines(LINE* lines, MAP* map)
 	}
 	return count;
 }
+
