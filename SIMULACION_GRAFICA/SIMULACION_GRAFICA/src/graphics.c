@@ -14,7 +14,6 @@ void drawLineTo(LINE line, int red, int green, int blue)
 
 SDL_Texture* bgInit(const char* img)
 {
-
     SDL_Surface* surface;
     SDL_Texture* bg;
 

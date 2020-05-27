@@ -1,52 +1,49 @@
 #include <stdio.h>
 #include "general.h"
 
-int main() {
-
-
-
-
+int main() 
+{
     MAP* map = loadMap();
     LINE lines[2000];
-    SDL_Event event;
     BOOL closeRequested = FALSE;
 
     sdl_init();
 
     SDL_Texture* bg = bgInit(map->IMGPath);
     BUTTON ALL_Buttons[10];
-    INTERESTPOINT* interestPoints;
+    INTERLIST* interestPoints;
+    INTERLIST* interestPointsPrint;
 
     STARTEND* twoPoints = (STARTEND*)malloc(sizeof(STARTEND));
     twoPoints->startP = NULL;
     twoPoints->endP = NULL;
 
 
-
-
-
-
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, bg, NULL, NULL);
     SDL_RenderPresent(rend);
 
-    init_buttons(ALL_Buttons);
-    button_set_dim(ALL_Buttons);
+    initButtons(ALL_Buttons);
+    buttonSetDim(ALL_Buttons);
 
-    interestPoints = initInterestpoints(map);
-
-
-
+    interestPointsPrint = interestPoints = initInterestpoints(map); // Get all the interest poits
 
     for (int i = 0; i < getLines(lines, map); i++) {
         drawLineTo(lines[i], 0, 0, 255);
         SDL_RenderPresent(rend);
     }
 
+    while (interestPointsPrint != NULL) // draw the interest points
+    {
+        SDL_RenderCopy(rend, interestPointsPrint->interestpoint.texture, NULL, &interestPointsPrint->interestpoint.dim);
+        interestPointsPrint = interestPointsPrint->ptrInterest;
+        SDL_RenderPresent(rend);
+    }
+
     do
     {
-        SDL_RenderCopy(rend, bg, NULL, NULL);
-        closeRequested = init_menu(twoPoints, map, ALL_Buttons, lines);
+        //SDL_RenderCopy(rend, bg, NULL, NULL);
+        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 
