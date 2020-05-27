@@ -49,9 +49,10 @@ int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines) {
 
             if (distMouseButton(ALL_Buttons[2], position))
             {
+                twoPoints->startP = &map->points[0];
+                twoPoints->endP= &map->points[76];
                 if (twoPoints->startP != NULL && twoPoints->endP != NULL)
                 {
-
                     execAlgorithm(map, lines, twoPoints->startP, twoPoints->endP);
                 }
                 else
