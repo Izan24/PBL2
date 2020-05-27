@@ -3,60 +3,54 @@
 
 int main() {
 
-<<<<<<< HEAD
 
 
-=======
-    /*printf("%s", mapFileName());*/
 
     MAP* map = loadMap();
     LINE lines[2000];
->>>>>>> master
-
-	
-
-<<<<<<< HEAD
-	
-=======
-    // RANDOM TU
-
-
     SDL_Event event;
     BOOL closeRequested = FALSE;
-    //SDL_Texture* bg = bg_init("/resources/images/backgrounds/MutrikuIMG.png")/*;*/
-    SDL_Texture* bg = bgInit("MutrikuIMG.png");
 
-    /*while (closeRequested == FALSE)
-    {*/
+    sdl_init();
+
+    SDL_Texture* bg = bgInit(map->IMGPath);
+    BUTTON ALL_Buttons[10];
+    INTERESTPOINT* interestPoints;
+
+    STARTEND* twoPoints = (STARTEND*)malloc(sizeof(STARTEND));
+    twoPoints->startP = NULL;
+    twoPoints->endP = NULL;
+
+
+
+
+
 
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, bg, NULL, NULL);
     SDL_RenderPresent(rend);
+
+    init_buttons(ALL_Buttons);
+    button_set_dim(ALL_Buttons);
+
+    interestPoints = initInterestpoints(map);
+
+
+
+
     for (int i = 0; i < getLines(lines, map); i++) {
         drawLineTo(lines[i], 0, 0, 255);
         SDL_RenderPresent(rend);
     }
 
-    NODEPOINT* startPrueba;
-    NODEPOINT* endPrueba;
-
-    startPrueba = &map->points[15];
-    endPrueba = &map->points[80];
-
-    execAlgorithm(map, lines, startPrueba, endPrueba);
-
-    /*while (SDL_PollEvent(&event))
+    do
     {
-        if (event.type == SDL_QUIT)
-        {
-            closeRequested = TRUE;
-            sdl_destroy();
-        }
-    }*/
-    //}
+        SDL_RenderCopy(rend, bg, NULL, NULL);
+        closeRequested = init_menu(twoPoints, map, ALL_Buttons, lines);
+        SDL_RenderPresent(rend);
+    } while (closeRequested == FALSE);
 
-    getchar();
+
     return 0;
->>>>>>> master
 }
 

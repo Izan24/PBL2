@@ -1,6 +1,7 @@
 #ifndef USERINTERFACE
 #define USERINTERFACE
 
+typedef enum Stage { RED, START, END };
 
 typedef struct Mouse_pos {
 
@@ -22,7 +23,21 @@ typedef struct startEnd {
     NODEPOINT* endP;	
 }STARTEND;
 
-int init_menu(STARTEND* twoPoints, PNODEPOINT points, BUTTON* ALL_Buttons);
+
+
+typedef struct Interestpoint {
+	
+	int x;
+	int y;
+	enum Stage type;
+	SDL_Texture* texture;
+	struct Interestpoint* ptrInterest;
+
+}INTERESTPOINT;
+
+
+
+int init_menu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines);
 int verify_pos_mouse(BUTTON button, MOUSE_POS* position);
 int dist_mouse_button(BUTTON button, MOUSE_POS* position);
 void select_texture(int which, BUTTON button);
@@ -32,7 +47,8 @@ void error_message(BUTTON Error_button);
 
 int deploy_menu_call(BUTTON* ALL_Buttons, MOUSE_POS* position);
 
-
+INTERESTPOINT* initInterestpoints(MAP* map);
+void insertInterestPointInHead(INTERESTPOINT** list, INTERESTPOINT* point);
 
 /*
 
@@ -43,5 +59,7 @@ int deploy_menu_call(BUTTON* ALL_Buttons, MOUSE_POS* position);
 4 Swap_button
 5 Error_button
 
+
 */
 #endif
+

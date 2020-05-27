@@ -2,9 +2,10 @@
 #include "userInterface.h"
 #include <math.h>
 
-int init_menu(STARTEND* twoPoints, PNODEPOINT points, BUTTON* ALL_Buttons) {
 
-	SDL_Event mouse;
+int init_menu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines) {
+
+	SDL_Event mouse; 
 	MOUSE_POS* position = (MOUSE_POS*)malloc(sizeof(MOUSE_POS));
 	static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
 
@@ -51,7 +52,8 @@ int init_menu(STARTEND* twoPoints, PNODEPOINT points, BUTTON* ALL_Buttons) {
 			{
 				if (twoPoints->startP != NULL && twoPoints->endP != NULL)
 				{
-					//aki el A star de furkolay y isan
+				
+					execAlgorithm(map, lines, twoPoints->startP, twoPoints->endP);
 				}
 				else
 				{
@@ -167,19 +169,21 @@ int verify_pos_mouse(BUTTON button, MOUSE_POS* position) {
 
 void init_buttons(BUTTON* ALL_Buttons)
 {
-	ALL_Buttons[0].normal_ver = bg_init("Button_menu.png");
-	ALL_Buttons[0].grey_ver = bg_init("Button_menu_grey.png");
-	ALL_Buttons[1].normal_ver = bg_init("Button_points.png");
-	ALL_Buttons[1].grey_ver = bg_init("Button_points_grey.png");
-	ALL_Buttons[2].normal_ver = bg_init("Button_go.png");
-	ALL_Buttons[2].grey_ver = bg_init("Button_go_grey.png");
+	
+	ALL_Buttons[0].normal_ver = bgInit("./resources/Button_menu.png");
+	ALL_Buttons[0].grey_ver = bgInit("./resources/Button_menu_grey.png");
+	ALL_Buttons[1].normal_ver = bgInit("./resources/Button_points.png");
+	ALL_Buttons[1].grey_ver = bgInit("./resources/Button_points_grey.png");
+	ALL_Buttons[2].normal_ver = bgInit("./resources/Button_go.png");
+	ALL_Buttons[2].grey_ver = bgInit("./resources/Button_go_grey.png");
 
-	ALL_Buttons[3].normal_ver = bg_init("exit_button.png");
-	ALL_Buttons[3].grey_ver = bg_init("exit_button_grey.png");
-	ALL_Buttons[4].normal_ver = bg_init("Swap_button.png");
-	ALL_Buttons[4].grey_ver = bg_init("Swap_button_grey.png");
+	ALL_Buttons[3].normal_ver = bgInit("./resources/exit_button.png");
+	ALL_Buttons[3].grey_ver = bgInit("./resources/exit_button_grey.png");
+	ALL_Buttons[4].normal_ver = bgInit("./resources/Swap_button.png");
+	ALL_Buttons[4].grey_ver = bgInit("./resources/Swap_button_grey.png");
 
-	ALL_Buttons[5].normal_ver = bg_init("error_message.png");
+	ALL_Buttons[5].normal_ver = bgInit("./resources/error_message.png");
+	
 }
 
 void error_message(BUTTON Error_button)
@@ -249,7 +253,46 @@ void button_set_dim(BUTTON* ALL_Buttons)
 	ALL_Buttons[5].dim.y = 234;
 	ALL_Buttons[5].dim.w = 75;
 	ALL_Buttons[5].dim.h = 75;
+}
+
+
+INTERESTPOINT* initInterestpoints(MAP* map) 
+{
+
+	INTERESTPOINT* interestPoint = (INTERESTPOINT*)malloc(sizeof(INTERESTPOINT));
+	INTERESTPOINT* interestList = (INTERESTPOINT*)malloc(sizeof(INTERESTPOINT));
+	
 	
 
+	for (int i = 0; i < map->nodePointAmount; i++)
+	{
 
+		if (strcmp(map->points[i].title, "Interest") == 0)
+		{
+			interestPoint->x = map->points[i].x;
+			interestPoint->y= map->points[i].y;
+			interestPoint->type = RED;
+			interestPoint->texture = bgInit("./resources/button_red_locate");
+			interestPoint->ptrInterest = NULL;
+			insertInterestPointInHead(&interestList, interestPoint);
+		}
+	}
+
+
+	return(interestList);
+}
+
+void insertInterestPointInHead(INTERESTPOINT** list, INTERESTPOINT* point) {
+    if (*list == NULL) {
+
+        *list = (INTERESTPOINT*)malloc(sizeof(INTERESTPOINT));
+        (*list) = point;
+        (*list)->ptrInterest = NULL;
+    }
+    else {
+		INTERESTPOINT* aux = (INTERESTPOINT*)malloc(sizeof(INTERESTPOINT));
+        aux = point;
+        aux->ptrInterest = *list;
+        *list = aux;
+    }
 }
