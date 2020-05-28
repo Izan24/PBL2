@@ -12,7 +12,6 @@ int main()
     SDL_Texture* bg = bgInit(map->IMGPath);
     BUTTON ALL_Buttons[10];
     INTERLIST* interestPoints;
-    INTERLIST* interestPointsPrint;
 
     STARTEND* twoPoints = (STARTEND*)malloc(sizeof(STARTEND));
     twoPoints->startP = NULL;
@@ -26,24 +25,21 @@ int main()
     initButtons(ALL_Buttons);
     buttonSetDim(ALL_Buttons);
 
-    interestPointsPrint = interestPoints = initInterestpoints(map); // Get all the interest poits
+    interestPoints = initInterestpoints(map); // Get all the interest poits
 
-    for (int i = 0; i < getLines(lines, map); i++) {
-        drawLineTo(lines[i], 0, 0, 255);
-        SDL_RenderPresent(rend);
-    }
+    getLines(lines, map);
 
-    while (interestPointsPrint != NULL) // draw the interest points
-    {
-        SDL_RenderCopy(rend, interestPointsPrint->interestpoint.texture, NULL, &interestPointsPrint->interestpoint.dim);
-        interestPointsPrint = interestPointsPrint->ptrInterest;
-        SDL_RenderPresent(rend);
-    }
+    //for (int i = 0; i < getLines(lines, map); i++) {
+    //    drawLineTo(lines[i], 0, 0, 255);
+    //    SDL_RenderPresent(rend);
+    //}
+
+    drawAllInterestPoints(interestPoints,twoPoints,RED);
 
     do
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);
-        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines);
+        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines,interestPoints);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 
