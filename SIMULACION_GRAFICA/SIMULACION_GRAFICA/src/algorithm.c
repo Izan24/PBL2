@@ -1,6 +1,12 @@
 #include "general.h"
 #include "algorithm.h"
 
+void execAlgorithm(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP) {
+    ANODE* endList = aStar(map, lines, startP, endP);
+    ANODE* printList = returnPathAnode(endList, startP->id, endP->id);
+    drawPath(printList, map);
+}
+
 int getLines(LINE* lines, MAP* map) {
     int count = 0, tmpX0, tmpY0, tmpX1, tmpY1, ordTmp;
     LINE tmpLine;
@@ -201,12 +207,6 @@ ASTAR searchTheLowestPoint(ANODE* mainList) {
         mainList = mainList->ptrAstar;
     }
     return lowest;
-}
-
-void execAlgorithm(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP) {
-    ANODE* endList = aStar(map, lines, startP, endP);
-    ANODE* printList = returnPathAnode(endList, startP->id, endP->id);
-    drawPath(printList, map);
 }
 
 ANODE* returnPathAnode(ANODE* endList, int startId, int endId) {

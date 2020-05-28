@@ -1,14 +1,14 @@
 #ifndef GENERAL_H
 
 #define GENERAL_H
-#define MAX_STR 128
-#define MAX_CONNECTIONS 10
-#define WINDOW_WIDTH (1360)
-#define WINDOW_HEIGHT (768)
-#define MAX_NODE (300)
+#define MAX_STR 128 // Max chars of a string
+#define MAX_CONNECTIONS 10 // Max connections of a single point
+#define WINDOW_WIDTH (1360) // The width of the window
+#define WINDOW_HEIGHT (768) // The height of the window
+#define MAX_NODE (300) // The number of the maximum nodes a map can have
 
-typedef enum boolean{FALSE, TRUE}BOOL;
-typedef enum type{NODE, CROSSWALK, INTEREST}TYPE;
+typedef enum boolean{FALSE, TRUE}BOOL; // A simple boolean enum
+typedef enum type{NODE, CROSSWALK, INTEREST}TYPE; // The types of the points being NODE (0), CROSSWALK (1) or INTEREST (2).
 
 #include <stdlib.h>
 #include <stdio.h>

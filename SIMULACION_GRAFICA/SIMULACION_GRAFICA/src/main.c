@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "general.h"
 
-int main() 
-{
+int main(){
     MAP* map = loadMap();
     LINE lines[2000];
     BOOL closeRequested = FALSE;
