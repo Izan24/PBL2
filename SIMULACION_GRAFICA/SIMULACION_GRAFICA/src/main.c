@@ -16,7 +16,6 @@ int main(){
     twoPoints->startP = NULL;
     twoPoints->endP = NULL;
 
-
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, bg, NULL, NULL);
     SDL_RenderPresent(rend);
@@ -33,12 +32,12 @@ int main(){
     //    SDL_RenderPresent(rend);
     //}
 
-    drawAllInterestPoints(interestPoints,twoPoints,RED);
+    drawAllInterestPoints(interestPoints,RED);
 
     do
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);
-        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines,interestPoints);
+        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines, interestPoints, bg);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 

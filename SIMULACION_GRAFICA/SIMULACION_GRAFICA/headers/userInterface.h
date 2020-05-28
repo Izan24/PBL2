@@ -16,6 +16,7 @@ typedef struct Button {
 	int radius;
 	SDL_Texture* normal_ver;
 	SDL_Texture* grey_ver;
+	int state;
 }BUTTON;
 
 typedef struct startEnd {
@@ -39,23 +40,26 @@ typedef struct interList {
 	struct interList* ptrInterest; // Pointer to the next item of the list
 }INTERLIST;
 
-int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints);
-int verify_pos_mouse(BUTTON button, MOUSE_POS* position);
+int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg);
+int verifyPosMouse(BUTTON button, MOUSE_POS* position);
 int distMouseButton(BUTTON button, MOUSE_POS* position);
 void selectTexture(int which, BUTTON button);
 void buttonSetDim(BUTTON* ALL_Buttons);
 void initButtons(BUTTON* ALL_Buttons);
-void error_message(BUTTON Error_button);
+void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints);
 
-int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position);
+int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST* interestPoints, SDL_Texture* bg);
 
 INTERLIST* initInterestpoints(MAP* map);
 void insertInterestPointInHead(INTERLIST** list, INTERESTPOINT point);
 void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mousePos, MAP* map);
 //void drawInterestPoint(MAP* map, NODEPOINT* point);
-void drawAllInterestPoints(INTERLIST* interestPoints, STARTEND* twoPoints, STAGE type);
+void drawAllInterestPoints(INTERLIST* interestPoints, STAGE type);
 void setAllToRed(INTERLIST* interestList);
 void setColor(INTERLIST* interestList, STAGE color, int id);
+
+
+
 
 /*
 
@@ -67,5 +71,7 @@ void setColor(INTERLIST* interestList, STAGE color, int id);
 5 Error_button
 
 */
+
+
 #endif
 
