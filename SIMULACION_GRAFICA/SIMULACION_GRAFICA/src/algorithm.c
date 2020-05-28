@@ -71,7 +71,6 @@ int distancePointToPoint(NODEPOINT startP, NODEPOINT endP) {
     return dist;
 }
 
-
 void getAllDistances(MAP* map, NODEPOINT p) {
     for (int i = 0; i < map->nodePointAmount; i++) {
         map->points[i].distanceFromEnd = distancePointToPoint(p, map->points[i]);
@@ -138,7 +137,6 @@ ANODE* aStar(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP)
 
     return endList;
 }
-
 
 int findPInList(ANODE* list, ASTAR p) {
     int found = 0;
