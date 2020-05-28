@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines) {
+int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints) {
 
     SDL_Event mouse;
     MOUSE_POS* position = (MOUSE_POS*)malloc(sizeof(MOUSE_POS));
@@ -34,7 +34,7 @@ int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines) {
 
     switch (mouse.type)
     {
-    case SDL_MOUSEBUTTONDOWN:
+    case SDL_MOUSEBUTTONUP:
         if (SDL_BUTTON_LEFT)
         {
             if (distMouseButton(ALL_Buttons[0], position))
@@ -44,13 +44,15 @@ int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines) {
 
             if (distMouseButton(ALL_Buttons[1], position))
             {
-                //select_points_map(&twoPoints, points);
+                setAllToRed(interestPoints);
+                twoPoints->startP = NULL;
+                twoPoints->endP = NULL;
+                drawAllInterestPoints(interestPoints, twoPoints, RED);
+                selectPointsMap(&twoPoints, interestPoints, position, map);
             }
 
             if (distMouseButton(ALL_Buttons[2], position))
             {
-                twoPoints->startP = &map->points[0];
-                twoPoints->endP= &map->points[76];
                 if (twoPoints->startP != NULL && twoPoints->endP != NULL)
                 {
                     execAlgorithm(map, lines, twoPoints->startP, twoPoints->endP);
@@ -149,6 +151,91 @@ void selectTexture(int which, BUTTON button) {
     else {
         SDL_QueryTexture(button.normal_ver, NULL, NULL, &button.dim.w, &button.dim.h);
         SDL_RenderCopy(rend, button.normal_ver, NULL, &button.dim);
+    }
+}
+
+void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mousePos, MAP* map)
+{
+    NODEPOINT mouse;
+
+    INTERLIST* aux = iPointsList;
+
+    SDL_Event click;
+
+    BOOL done = FALSE;
+
+
+    if (aux != NULL)
+    {
+        do
+        {
+            do
+            {
+                if (SDL_PollEvent(&click))
+                {
+                    if (click.type == SDL_MOUSEBUTTONUP)
+                    {
+                        if (SDL_BUTTON_LEFT)
+                        {
+                            done = TRUE;
+                            mouse.x = click.motion.x;
+                            mouse.y = click.motion.y;
+                        }
+                    }
+                }
+            } while (done == FALSE);
+
+            while (aux != NULL)
+            {
+                if (getCost(mouse, map->points[aux->interestpoint.id]) < 10)
+                {
+                    (*twoPoints)->startP = &map->points[aux->interestpoint.id];
+                }
+                aux = aux->ptrInterest;
+            }
+
+            done = FALSE;
+            aux = iPointsList;
+        } while ((*twoPoints)->startP == NULL);
+
+        setColor(iPointsList, START, (*twoPoints)->startP->id);
+        drawAllInterestPoints(iPointsList, *twoPoints, START);
+
+
+        do
+        {
+            do
+            {
+                if (SDL_PollEvent(&click))
+                {
+                    if (click.type == SDL_MOUSEBUTTONUP)
+                    {
+                        if (SDL_BUTTON_LEFT)
+                        {
+                            done = TRUE;
+                            mouse.x = click.motion.x;
+                            mouse.y = click.motion.y;
+                        }
+                    }
+                }
+            } while (done == FALSE);
+
+            while (aux != NULL)
+            {
+                if (getCost(mouse, map->points[aux->interestpoint.id]) < 10)
+                {
+                    (*twoPoints)->endP = &map->points[aux->interestpoint.id];
+                }
+
+                aux = aux->ptrInterest;
+            }
+
+            done = FALSE;
+            aux = iPointsList;
+        } while ((*twoPoints)->endP == NULL);
+
+        setColor(iPointsList, END, (*twoPoints)->endP->id);
+        drawAllInterestPoints(iPointsList, *twoPoints, END);
     }
 }
 
@@ -252,7 +339,6 @@ void buttonSetDim(BUTTON* ALL_Buttons)
     ALL_Buttons[5].dim.h = 75;
 }
 
-
 INTERLIST* initInterestpoints(MAP* map)
 {
     INTERESTPOINT interestPoint;
@@ -262,10 +348,13 @@ INTERLIST* initInterestpoints(MAP* map)
     {
         if (map->points[i].pointType == INTEREST)
         {
+            interestPoint.id = map->points[i].id;
             interestPoint.x = map->points[i].x;
             interestPoint.y = map->points[i].y;
             interestPoint.type = RED;
-            interestPoint.texture = bgInit("./resources/Button_red_locate.png");
+            interestPoint.textureRed = bgInit("./resources/Button_red_locate.png");
+            interestPoint.textureStart = bgInit("./resources/Button_green_locate.png");
+            interestPoint.textureEnd = bgInit("./resources/Button_purple_locate.png");
             interestPoint.dim.w = 20;
             interestPoint.dim.h = 27;
             interestPoint.dim.x = interestPoint.x - 10;
@@ -288,5 +377,64 @@ void insertInterestPointInHead(INTERLIST** list, INTERESTPOINT point) {
         aux->interestpoint = point;
         aux->ptrInterest = *list;
         *list = aux;
+    }
+}
+
+void drawAllInterestPoints(INTERLIST* interestPoints, STARTEND* twoPoints, STAGE type)
+{
+    while (interestPoints != NULL) // draw the interest points
+    {
+        if (type == RED)
+        {
+            if (interestPoints->interestpoint.type == type)
+            {
+                SDL_RenderCopy(rend, interestPoints->interestpoint.textureRed, NULL, &interestPoints->interestpoint.dim);
+                SDL_RenderPresent(rend);
+            }
+        }
+        else if (type == START)
+        {
+            if (interestPoints->interestpoint.type == type)
+            {
+                SDL_RenderCopy(rend, interestPoints->interestpoint.textureStart, NULL, &interestPoints->interestpoint.dim);
+                SDL_RenderPresent(rend);
+            }
+        }
+        else
+        {
+            if (interestPoints->interestpoint.type == type)
+            {
+                SDL_RenderCopy(rend, interestPoints->interestpoint.textureEnd, NULL, &interestPoints->interestpoint.dim);
+                SDL_RenderPresent(rend);
+            }
+        }
+
+        interestPoints = interestPoints->ptrInterest;
+    }
+}
+
+void setAllToRed(INTERLIST* interestList)
+{
+    while (interestList != NULL)
+    {
+        interestList->interestpoint.type = RED;
+        interestList = interestList->ptrInterest;
+    }
+}
+
+void setColor(INTERLIST* interestList, STAGE color, int id)
+{
+    BOOL done = FALSE;
+    while (interestList != NULL && done == FALSE)
+    {
+        if (interestList->interestpoint.id == id)
+        {
+            interestList->interestpoint.type = color;
+            done = TRUE;
+        }
+        else
+        {
+            interestList = interestList->ptrInterest;
+        }
     }
 }
