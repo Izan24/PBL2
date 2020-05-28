@@ -41,6 +41,7 @@ CHAR* ChooseProgram();
 char* readJSON(char* FileName);
 void printMap(MAP* map);
 MAP* parseJSON(char* buffer);
+void cutre(CHAR* filename);
 
 
 

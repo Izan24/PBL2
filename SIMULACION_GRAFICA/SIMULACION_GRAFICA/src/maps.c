@@ -38,6 +38,7 @@ char* mapFileName() { // Opens a dialog box to select a file and returns its nam
 CHAR* ChooseProgram() { // Uses windows.h function GetOpenFileName to open a dialog box and let the user select a file.
     OPENFILENAME  ofn;
     CHAR filename[MAX_PATH];
+    cutre(filename);
     memset(&ofn, 0, sizeof(ofn));
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = NULL;
@@ -52,6 +53,29 @@ CHAR* ChooseProgram() { // Uses windows.h function GetOpenFileName to open a dia
         return 1;
     }
     else return filename;
+}
+
+void cutre(CHAR* filename) {
+    filename[0] = 'S';
+    filename[1] = 'e';
+    filename[2] = 'l';
+    filename[3] = 'e';
+    filename[4] = 'c';
+    filename[5] = 'c';
+    filename[6] = 'i';
+    filename[7] = 'o';
+    filename[8] = 'n';
+    filename[9] = 'a';
+    filename[10] = 'r';
+    filename[11] = ' ';
+    filename[12] = 'A';
+    filename[13] = 'r';
+    filename[14] = 'c';
+    filename[15] = 'h';
+    filename[16] = 'i';
+    filename[17] = 'v';
+    filename[18] = 'o';
+    filename[19] = '\0';
 }
 
 char* readJSON(char* FileName) { // Opens the file specified on filename, reads it and returns its value in a char buffer;
