@@ -1,12 +1,14 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+// Draws a line inputing a LINE structure. It also accepts colors as input
+void drawLineTo(LINE line, int red, int green, int blue);
 
-void drawLineTo(LINE line, int red, int green, int blue); // Draw a line 
+//Loads a textur inputing a file name
+SDL_Texture* bgInit(const char* img);
 
-SDL_Texture* bgInit(const char* img); //Returns a pointer to the Background
-
-void drawThiccLine(LINE line); // Draw a THICC line
+// Draws a THICCCC line
+void drawThiccLine(LINE line);
 
 
 #endif // !GRAPHICS_H

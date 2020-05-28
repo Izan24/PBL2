@@ -20,7 +20,7 @@ typedef struct Button {
 
 typedef struct startEnd {
     NODEPOINT* startP;
-    NODEPOINT* endP;	
+    NODEPOINT* endP;
 }STARTEND;
 
 typedef struct Interestpoint {
