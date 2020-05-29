@@ -44,7 +44,7 @@ int main(){
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);
 
-        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines, interestPoints, bg, cursor);
+        closeRequested = initMenu(twoPoints, &map, ALL_Buttons, lines, &interestPoints, &bg, cursor);
 
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
