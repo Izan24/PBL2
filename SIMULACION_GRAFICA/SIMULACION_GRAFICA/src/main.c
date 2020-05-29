@@ -6,10 +6,10 @@ int main(){
     LINE lines[2000];
     BOOL closeRequested = FALSE;
 
-    sdl_init();
+    sdl_init(); // SDL init before we initialize the BG
 
     SDL_Texture* bg = bgInit(map->IMGPath);
-    BUTTON ALL_Buttons[10];
+    BUTTON ALL_Buttons[MAX_BUTTON_N];
     INTERLIST* interestPoints;
 
     STARTEND* twoPoints = (STARTEND*)malloc(sizeof(STARTEND));
@@ -37,7 +37,7 @@ int main(){
     do
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);
-        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines, interestPoints, bg);
+        closeRequested = initMenu(twoPoints, &map, ALL_Buttons, lines, &interestPoints, &bg);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 
