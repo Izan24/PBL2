@@ -8,7 +8,7 @@
 #define MAX_NODE (300) // The number of the maximum nodes a map can have
 
 typedef enum boolean{FALSE, TRUE}BOOL; // A simple boolean enum
-typedef enum type{NODE, CROSSWALK, INTEREST}TYPE; // The types of the points being NODE (0), CROSSWALK (1) or INTEREST (2).
+
 
 #include <stdlib.h>
 #include <stdio.h>

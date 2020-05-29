@@ -1,6 +1,8 @@
 #ifndef MAPS_H
 #define MAPS_H
 
+
+typedef enum type { NODE, CROSSWALK, INTEREST }TYPE; // The types of the points being NODE (0), CROSSWALK (1) or INTEREST (2).
 /*
 Simple lines with the coordinates in X and Y axis as well as the cost (distance) of the line.
 */

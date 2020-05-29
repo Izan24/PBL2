@@ -36,5 +36,8 @@ void insertInHead(ANODE** printList, ASTAR point);
 void drawPath(ANODE* printList, MAP* map);
 void deleteFromList(ANODE** list, ASTAR deleteItem);
 ANODE* previousItem(ANODE* list, ASTAR deleteitem);
+void setPoint(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i);
+void setPointDijkstra(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i);
+ANODE* dijstra(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP);
 
 #endif // !ALGORITHM_H

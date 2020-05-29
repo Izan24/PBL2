@@ -22,10 +22,6 @@ int getLines(LINE* lines, MAP* map) {
             tmpLine.y0 = tmpY0;
             tmpLine.x1 = tmpX1;
             tmpLine.y1 = tmpY1;
-            map->points[i].connections[j].lineTo.x0 = tmpX0;
-            map->points[i].connections[j].lineTo.y0 = tmpY0;
-            map->points[i].connections[j].lineTo.x1 = tmpX1;
-            map->points[i].connections[j].lineTo.y1 = tmpY1;
 
             if ((tmpLine.x0 != tmpLine.x1) || (tmpLine.y0 != tmpLine.y1))
             {
@@ -113,11 +109,7 @@ ANODE* aStar(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP)
     {
         for (int i = 0; i < map->points[currentPoint.current].connectionN; i++)
         {
-            nextPoint.from = currentPoint.current;
-            nextPoint.current = map->points[currentPoint.current].connections[i].id;
-            nextPoint.cost = currentPoint.cost + getCost(map->points[currentPoint.current], map->points[nextPoint.current]);
-            nextPoint.distance = map->points[map->points[currentPoint.current].connections[i].id].distanceFromEnd;
-            nextPoint.total = nextPoint.cost + nextPoint.distance;
+            setPoint(map, &currentPoint, &nextPoint, i);
 
             if (findPInList(endList, nextPoint) == 0)
             {
@@ -139,6 +131,62 @@ ANODE* aStar(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP)
         insertInList(&endList, currentPoint); // Update the name from X AE A-12 to X AE A-XII
         deleteFromList(&mainList, currentPoint);
         currentPoint = searchTheLowestPoint(mainList);
+    }
+
+    return endList;
+}
+
+ANODE* dijstra(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP){
+    int startId = startP->id;
+    int endId = endP->id;
+    int n = 0;
+
+    ASTAR currentPoint;
+    ASTAR nextPoint;
+    ASTAR endPoint;
+
+    ANODE* mainList = (ANODE*)malloc(sizeof(ANODE));
+    ANODE* endList = NULL;
+    ANODE* aux = NULL;
+
+    getAllDistances(map, *endP);
+
+    currentPoint.current = startP->id;
+    currentPoint.from = startP->id;
+    currentPoint.cost = 0;
+    currentPoint.distance = 0;
+    currentPoint.total = 0;
+
+    mainList->astar = currentPoint;
+    mainList->ptrAstar = NULL;
+    endPoint.current = endP->id;
+
+    while (mainList != NULL)
+    {
+        for (int i = 0; i < map->points[currentPoint.current].connectionN; i++)
+        {
+            setPointDijkstra(map, &currentPoint, &nextPoint, i);
+
+            if (findPInList(endList, nextPoint) == 0)
+            {
+                if (findPInList(mainList, nextPoint)) { // If we find it in the main list we check that it's cost is less than the cost of the point that is already in the list.
+
+                    aux = returnANodePointer(mainList, nextPoint);
+
+                    if (aux->astar.total > nextPoint.total) //
+                    {
+                        aux->astar.total = nextPoint.total;
+                        aux->astar.from = nextPoint.from;
+                    }
+                }
+                else { // If we dont find it in the list we insert the point to the list
+                    insertInList(&mainList, nextPoint);
+                }
+            }
+        }
+        insertInList(&endList, currentPoint); // Update the name from X AE A-12 to X AE A-XII
+        deleteFromList(&mainList, currentPoint);
+        if (mainList != NULL) currentPoint = searchTheLowestPoint(mainList);
     }
 
     return endList;
@@ -314,4 +362,21 @@ ANODE* previousItem(ANODE* list, ASTAR deleteitem)
     }
 
     return(previous);
+}
+
+
+void setPoint(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i) {
+    nextPoint->from = currentPoint->current;
+    nextPoint->current = map->points[currentPoint->current].connections[i].id;
+    nextPoint->cost = currentPoint->cost + getCost(map->points[currentPoint->current], map->points[nextPoint->current]);
+    nextPoint->distance = map->points[map->points[currentPoint->current].connections[i].id].distanceFromEnd;
+    nextPoint->total = nextPoint->cost + nextPoint->distance;
+}
+
+void setPointDijkstra(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i) {
+    nextPoint->from = currentPoint->current;
+    nextPoint->current = map->points[currentPoint->current].connections[i].id;
+    nextPoint->cost = currentPoint->cost + getCost(map->points[currentPoint->current], map->points[nextPoint->current]);
+    nextPoint->distance = 0;
+    nextPoint->total = nextPoint->cost;
 }
