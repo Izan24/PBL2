@@ -39,7 +39,7 @@ int sdl_init()
 
 int sdl_destroy()
 {
-    
+
     if (rend)// It enters here only if rend is defined and same with the other variables
     {
         SDL_DestroyRenderer(rend);
@@ -53,4 +53,15 @@ int sdl_destroy()
     SDL_QUIT;
 
     return 0;
+}
+
+struct Cursors initCursor() {
+    struct Cursors cursor;
+    SDL_Surface* cursorSurf = IMG_Load("./resources/interface/cursor1.png");
+    cursor.arrow = SDL_CreateColorCursor(cursorSurf, 0, 0);
+    SDL_FreeSurface(cursorSurf);
+    cursorSurf = IMG_Load("./resources/interface/cursor2.png");
+    cursor.hand = SDL_CreateColorCursor(cursorSurf, 0, 0);
+    SDL_FreeSurface(cursorSurf);
+    return cursor;
 }

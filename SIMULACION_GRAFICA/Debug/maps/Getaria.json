@@ -1,6 +1,6 @@
 {
    "mapName":"Getaria",
-   "IMGPath":"GetariaIMG.png",
+   "IMGPath":"./IMG/Getaria.png",
   "points": [
     {
       "pointType": "Node",

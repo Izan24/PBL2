@@ -2,12 +2,14 @@
 #include "general.h"
 
 int main(){
-    MAP* map = loadMap();
+
     LINE lines[2000];
     BOOL closeRequested = FALSE;
 
     sdl_init();
+    struct Cursors cursor = initCursor();
 
+    MAP* map = loadMap();
     SDL_Texture* bg = bgInit(map->IMGPath);
     BUTTON ALL_Buttons[10];
     INTERLIST* interestPoints;
@@ -16,12 +18,16 @@ int main(){
     twoPoints->startP = NULL;
     twoPoints->endP = NULL;
 
+
+
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, bg, NULL, NULL);
     SDL_RenderPresent(rend);
 
     initButtons(ALL_Buttons);
     buttonSetDim(ALL_Buttons);
+
+
 
     interestPoints = initInterestpoints(map); // Get all the interest poits
 
@@ -37,7 +43,7 @@ int main(){
     do
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);
-        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines, interestPoints, bg);
+        closeRequested = initMenu(twoPoints, map, ALL_Buttons, lines, interestPoints, bg, cursor);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 

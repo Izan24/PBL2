@@ -15,4 +15,6 @@ int sdl_init();
 // Destroys all the SDL variables (Returns 1 on success)
 int sdl_destroy();
 
+struct Cursors initCursor();
+
 #endif // !SDL_DEFINE

@@ -4,14 +4,16 @@
 typedef enum Stage { RED, START, END }STAGE;
 
 typedef struct Mouse_pos {
-
 	int y;
 	int x;
 }MOUSE_POS;
 
+struct Cursors {
+	SDL_Cursor* arrow;
+	SDL_Cursor* hand;
+};
+
 typedef struct Button {
-
-
 	SDL_Rect dim;
 	int radius;
 	SDL_Texture* normal_ver;
@@ -40,7 +42,7 @@ typedef struct interList {
 	struct interList* ptrInterest; // Pointer to the next item of the list
 }INTERLIST;
 
-int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg);
+int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg, struct Cursors cursor);
 int verifyPosMouse(BUTTON button, MOUSE_POS* position);
 int distMouseButton(BUTTON button, MOUSE_POS* position);
 void selectTexture(int which, BUTTON button);

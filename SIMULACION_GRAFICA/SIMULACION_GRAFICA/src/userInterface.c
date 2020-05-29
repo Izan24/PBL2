@@ -3,11 +3,14 @@
 #include <math.h>
 
 
-int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg) {
+int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg, struct Cursors cursor) {
 
 	SDL_Event mouse;
 	MOUSE_POS* position = (MOUSE_POS*)malloc(sizeof(MOUSE_POS));
 	static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
+
+
+	SDL_SetCursor(cursor.arrow);
 
 	if (SDL_PollEvent(&mouse))
 	{
@@ -39,6 +42,7 @@ int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, IN
 	case SDL_MOUSEBUTTONUP:
 		if (SDL_BUTTON_LEFT)
 		{
+			SDL_SetCursor(cursor.hand);
 			if (distMouseButton(ALL_Buttons[0], position))
 			{
 				closeRequested = deployMenuCall(ALL_Buttons, position, mouse, interestPoints , bg);
@@ -304,7 +308,7 @@ void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoint
 	SDL_RenderCopy(rend, ALL_Buttons[5].normal_ver, NULL, &ALL_Buttons[5]);
 	SDL_RenderPresent(rend);
 	do
-	{	
+	{
 		if (SDL_PollEvent(&mouse1))
 		{
 			if (mouse1.type == SDL_MOUSEBUTTONDOWN)
