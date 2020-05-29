@@ -109,24 +109,20 @@ ANODE* aStar(MAP* map, LINE* lines, NODEPOINT* startP, NODEPOINT* endP)
     mainList->ptrAstar = NULL;
     endPoint.current = endP->id;
 
-    while (findPInList(endList, endPoint) == 0)
-    {
-        for (int i = 0; i < map->points[currentPoint.current].connectionN; i++)
-        {
+    while (findPInList(endList, endPoint) == 0){
+        for (int i = 0; i < map->points[currentPoint.current].connectionN; i++){
             nextPoint.from = currentPoint.current;
             nextPoint.current = map->points[currentPoint.current].connections[i].id;
             nextPoint.cost = currentPoint.cost + getCost(map->points[currentPoint.current], map->points[nextPoint.current]);
             nextPoint.distance = map->points[map->points[currentPoint.current].connections[i].id].distanceFromEnd;
             nextPoint.total = nextPoint.cost + nextPoint.distance;
 
-            if (findPInList(endList, nextPoint) == 0)
-            {
+            if (findPInList(endList, nextPoint) == 0){
                 if (findPInList(mainList, nextPoint)) { // If we find it in the main list we check that it's cost is less than the cost of the point that is already in the list.
 
                     aux = returnANodePointer(mainList, nextPoint);
 
-                    if (aux->astar.total > nextPoint.total) //
-                    {
+                    if (aux->astar.total > nextPoint.total) {
                         aux->astar.total = nextPoint.total;
                         aux->astar.from = nextPoint.from;
                     }
@@ -148,8 +144,7 @@ int findPInList(ANODE* list, ASTAR p) {
     int found = 0;
     ANODE* aux = list;
 
-    if (list != NULL)
-    {
+    if (list != NULL) {
         while (aux != NULL) {
             if (aux->astar.current == p.current) {
                 found = 1;

@@ -27,6 +27,9 @@
     <ClCompile Include="src\userInterface.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\mapBuilder.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\general.h">
@@ -45,6 +48,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\userInterface.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\mapBuilder.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

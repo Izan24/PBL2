@@ -8,6 +8,7 @@
 
 SDL_Renderer* rend; // A global variable for the renderer from the SDL
 SDL_Window* window; // A global variable for the window from the SDL
+SDL_Surface* surface;
 
 // Initializes the SDL libraries. Returns 0 on success and 1 if there was a problem
 int sdl_init();

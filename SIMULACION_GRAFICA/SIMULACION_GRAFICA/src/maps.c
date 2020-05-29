@@ -5,7 +5,7 @@
 
 MAP* loadMap() {
 	MAP* map = (MAP*)malloc(sizeof(MAP));
-	char* filename = mapFileName();
+	char* filename = FileName("json");
 	char* unparsedJson = readJSON(filename);
 	map = parseJSON(unparsedJson);
 	//printMap(map);
@@ -13,15 +13,15 @@ MAP* loadMap() {
 	return map;
 }
 
-char* mapFileName() {
+char* FileName(char * fileType) {
 	int i = 0, count = 0, counterZeros = 0;
 	char* izenArtx = (char*)malloc(sizeof(char) * 128);
 	char* unlucky = (char*)malloc(sizeof(char) * 128);
 	strcpy(unlucky, "Arre.json");
-	CHAR* filename = ChooseProgram();
+	CHAR* filename = ChooseProgram(fileType);
 	while (filename == -1) {
 		printf("\nNo selesionaste un archivo kabron...");
-		filename = ChooseProgram();
+		filename = ChooseProgram(fileType);
 	}
 	while (counterZeros < 3) {
 		if ((filename[i] != '\0')) {
@@ -38,7 +38,7 @@ char* mapFileName() {
 	return izenArtx;
 }
 
-CHAR* ChooseProgram() {
+CHAR* ChooseProgram(char * fileType) {
 	OPENFILENAME  ofn;
 	CHAR filename[MAX_PATH];
 	defName(filename);
@@ -46,7 +46,8 @@ CHAR* ChooseProgram() {
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
 	ofn.hInstance = NULL;
-	ofn.lpstrFilter = L"JSON files\0*.json\0\0";
+	if (strcmp(fileType, "json") == 0) ofn.lpstrFilter = L"Archivos JSON\0*.json\0\0";
+	if (strcmp(fileType, "png") == 0) ofn.lpstrFilter = L"Archivos PNG\0*.png\0\0";
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = L"Aukeratu mapa";

@@ -34,12 +34,14 @@ int sdl_init()
         return 1;
     }
 
+    IMG_Init(IMG_INIT_PNG);
+
     return 0;
 }
 
 int sdl_destroy()
 {
-    
+
     if (rend)// It enters here only if rend is defined and same with the other variables
     {
         SDL_DestroyRenderer(rend);

@@ -55,10 +55,10 @@ typedef struct map {
 MAP* loadMap();
 
 // Opens a dialog box to select a file and returns its name along with its path.
-char* mapFileName();
+char* FileName(char* fileType);
 
 // Uses windows.h function GetOpenFileName to open a dialog box and let the user select a file.
-CHAR* ChooseProgram();
+CHAR* ChooseProgram(char* fileType);
 
 // Opens the file specified on filename, reads it and returns its value in a char buffer.
 char* readJSON(char* FileName);

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\algorithm.c" />
     <ClCompile Include="src\graphics.c" />
+    <ClCompile Include="src\mapBuilder.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\maps.c" />
     <ClCompile Include="src\sdlInit.c" />
@@ -30,6 +31,7 @@
     <ClInclude Include="headers\algorithm.h" />
     <ClInclude Include="headers\general.h" />
     <ClInclude Include="headers\graphics.h" />
+    <ClInclude Include="headers\mapBuilder.h" />
     <ClInclude Include="headers\maps.h" />
     <ClInclude Include="headers\sdlDefine.h" />
     <ClInclude Include="headers\userInterface.h" />

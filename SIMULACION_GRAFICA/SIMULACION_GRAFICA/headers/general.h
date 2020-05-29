@@ -13,12 +13,14 @@ typedef enum type{NODE, CROSSWALK, INTEREST}TYPE; // The types of the points bei
 #include <stdlib.h>
 #include <stdio.h>
 #include <windows.h>
+//#include <unistd.h>
 #include <commdlg.h>
 #include "sdlDefine.h"
 #include "maps.h"
 #include "algorithm.h"
 #include "graphics.h"
 #include "userInterface.h"
+#include "mapBuilder.h"
 
 
 
