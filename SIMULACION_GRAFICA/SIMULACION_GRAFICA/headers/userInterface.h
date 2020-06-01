@@ -63,6 +63,7 @@ void setColor(INTERLIST* interestList, STAGE color, int id);
 void redrawAll(SDL_Texture* bg, BUTTON ALL_Buttons[], INTERESTPOINT* interestPoints);
 void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture** bg, STARTEND* twoPoints, BUTTON ALL_Buttons[]);
 void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints);
+void drawText(const char* message);
 
 
 

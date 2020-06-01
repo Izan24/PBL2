@@ -34,6 +34,12 @@ int sdl_init()
         return 1;
     }
 
+    TTF_Init();
+    if (TTF_Init() == -1) {
+        printf("TTF_Init: %s\n", TTF_GetError());
+        exit(2);
+    }
+
     return 0;
 }
 

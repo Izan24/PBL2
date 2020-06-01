@@ -23,6 +23,8 @@ void intro()
     SDL_RenderCopy(rend, logo, NULL, NULL);
     SDL_RenderPresent(rend);
 
+    SDL_Delay(250);
+
     SDL_DestroyTexture(logo);
     SDL_DestroyTexture(logoUnfocus);
 }
@@ -32,6 +34,8 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
     SDL_Event mouse;
     MOUSE_POS position;
     static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
+    INTERLIST* interListAux = *interestPoints;
+    NODEPOINT mousePosition;
 
     SDL_SetCursor(cursor.arrow);
 
@@ -45,6 +49,8 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
                 {
                     position.x = mouse.motion.x;
                     position.y = mouse.motion.y;
+                    mousePosition.x = mouse.motion.x;
+                    mousePosition.y = mouse.motion.y;
                 }
             }
 
@@ -92,6 +98,18 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
                     errorMessage(ALL_Buttons, *bg, *interestPoints);
                 }
             }
+
+            while (interListAux != NULL) // check all interest Points
+            {
+
+                if (getCost(mousePosition, (*map)->points[interListAux->interestpoint.id]) < 10)
+                {
+                    redrawAll(*bg, ALL_Buttons, *interestPoints);
+                    drawText((*map)->points[interListAux->interestpoint.id].title);
+                }
+                interListAux = interListAux->ptrInterest;
+            }
+
         }
         break;
     case SDL_QUIT:
@@ -131,7 +149,7 @@ int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, IN
                 {
                     if (distMouseButton(ALL_Buttons[4], &position1))
                     {
-                        freeOnChange(*map,*bg, *interestPoints);
+                        freeOnChange(*map, *bg, *interestPoints);
                         changeMap(map, lines, interestPoints, bg, twoPoints, ALL_Buttons);
                         bool = 1;
                     }
@@ -488,7 +506,7 @@ void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture*
     redrawAll(*bg, ALL_Buttons, *interestPoints);
 }
 
-void freeOnChange(MAP* map,SDL_Texture* bg, INTERLIST * interestPoints)
+void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints)
 {
     SDL_DestroyTexture(bg);
     free(map);
@@ -505,4 +523,33 @@ void freeOnChange(MAP* map,SDL_Texture* bg, INTERLIST * interestPoints)
         interestPoints = interestPoints->ptrInterest;
         free(aux);
     }
+}
+
+void drawText(const char* message)
+{
+    TTF_Font* font = TTF_OpenFont("../resources/fonts/Roboto-Light.ttf", 100);
+
+    SDL_Rect textLocation;
+    textLocation.w = 300;
+    textLocation.h = 30;
+    textLocation.x = 0;
+    textLocation.y = WINDOW_HEIGHT - textLocation.h;
+
+    SDL_Color color;
+    color.a = 255;
+    color.r = 255;
+    color.g = 255;
+    color.b = 255;
+
+    SDL_Surface* textSurface;
+    SDL_Texture* text;
+
+    textSurface = TTF_RenderText_Blended(font, message, color);
+    text = SDL_CreateTextureFromSurface(rend, textSurface);
+
+    SDL_RenderCopy(rend, text, NULL, &textLocation);
+
+    SDL_DestroyTexture(text);
+    TTF_CloseFont(font);
+    SDL_FreeSurface(textSurface);
 }
