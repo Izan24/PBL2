@@ -2,6 +2,28 @@
 #include "userInterface.h"
 #include <math.h>
 
+void intro()
+{
+    int alpha = 255;
+    float fadeSpeed = 0.07;
+    SDL_Texture* logo;
+    SDL_Texture* logoUnfocus;
+
+    logo = bgInit("./resources/backgrounds/introIMG.png");
+    logoUnfocus = bgInit("./resources/backgrounds/introIMGunfocused.png");
+
+    SDL_SetTextureBlendMode(logoUnfocus, SDL_BLENDMODE_BLEND);
+    while (alpha > 0)
+    {
+        SDL_RenderCopy(rend, logo, NULL, NULL);
+        SDL_SetTextureAlphaMod(logoUnfocus, alpha);
+        SDL_RenderCopy(rend, logoUnfocus, NULL, NULL);
+        alpha -= 2;
+        SDL_RenderPresent(rend);
+    }
+    SDL_RenderCopy(rend, logo, NULL, NULL);
+    SDL_RenderPresent(rend);
+}
 
 int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor) {
 
@@ -269,6 +291,20 @@ void initButtons(BUTTON* ALL_Buttons)
     ALL_Buttons[4].grey_ver = bgInit("./resources/Swap_button_grey.png");
 
     ALL_Buttons[5].normal_ver = bgInit("./resources/error_message.png");
+
+    //ALL_Buttons[0].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_menu.png");
+    //ALL_Buttons[0].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_menu_grey.png");
+    //ALL_Buttons[1].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_points.png");
+    //ALL_Buttons[1].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_points_grey.png");
+    //ALL_Buttons[2].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_go.png");
+    //ALL_Buttons[2].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_go_grey.png");
+
+    //ALL_Buttons[3].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/exit_button.png");
+    //ALL_Buttons[3].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/exit_button_grey.png");
+    //ALL_Buttons[4].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Swap_button.png");
+    //ALL_Buttons[4].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Swap_button_grey.png");
+
+    //ALL_Buttons[5].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/error_message.png");
 
 }
 

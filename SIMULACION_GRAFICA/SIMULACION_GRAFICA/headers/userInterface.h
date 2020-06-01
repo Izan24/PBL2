@@ -43,7 +43,8 @@ typedef struct interList {
 	struct interList* ptrInterest; // Pointer to the next item of the list
 }INTERLIST;
 
-int initMenu(STARTEND* twoPoints, MAP* map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST* interestPoints, SDL_Texture* bg, struct Cursors cursor);
+void intro();
+int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor);
 int verifyPosMouse(BUTTON button, MOUSE_POS* position);
 int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints);
 int distMouseButton(BUTTON button, MOUSE_POS* position);

@@ -8,6 +8,7 @@ int main(){
     sdl_init();
     struct Cursors cursor = initCursor();
 
+    intro();
 
     MAP* map = loadMap();
     SDL_Texture* bg = bgInit(map->IMGPath);
@@ -22,11 +23,9 @@ int main(){
 
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, bg, NULL, NULL);
-    SDL_RenderPresent(rend);
 
     initButtons(ALL_Buttons);
     buttonSetDim(ALL_Buttons);
-
 
 
     interestPoints = initInterestpoints(map); // Get all the interest poits
@@ -40,6 +39,8 @@ int main(){
 
     drawAllInterestPoints(interestPoints,RED);
 
+    //redrawAll(&map, lines, &interestPoints, &bg, twoPoints, ALL_Buttons);
+        
     do
     {
         //SDL_RenderCopy(rend, bg, NULL, NULL);

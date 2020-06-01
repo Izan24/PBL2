@@ -44,7 +44,7 @@ int sdl_destroy()
     {
         SDL_DestroyRenderer(rend);
     }
-
+    
     if (window)
     {
         SDL_DestroyWindow(window);
