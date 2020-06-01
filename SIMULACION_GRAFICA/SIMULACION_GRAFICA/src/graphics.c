@@ -16,8 +16,6 @@ SDL_Texture* bgInit(const char* img)
 	SDL_Surface* surface;
 	SDL_Texture* bg;
 
-	bg = (SDL_Texture*)malloc(sizeof(SDL_Texture*));
-
 	surface = IMG_Load(img);
 
 	bg = SDL_CreateTextureFromSurface(rend, surface);

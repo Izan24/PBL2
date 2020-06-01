@@ -25,8 +25,6 @@ int main(){
     SDL_RenderCopy(rend, bg, NULL, NULL);
 
     initButtons(ALL_Buttons);
-    buttonSetDim(ALL_Buttons);
-
 
     interestPoints = initInterestpoints(map); // Get all the interest poits
 
@@ -53,4 +51,3 @@ int main(){
 
     return 0;
 }
-

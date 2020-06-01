@@ -27,7 +27,7 @@
     <ClCompile Include="src\userInterface.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\initAplication.c">
+    <ClCompile Include="src\initApplication.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClInclude Include="headers\userInterface.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="headers\initAplication.h">
+    <ClInclude Include="headers\initApplication.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

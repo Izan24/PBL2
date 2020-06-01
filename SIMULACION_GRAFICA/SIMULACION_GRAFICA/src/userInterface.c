@@ -5,7 +5,6 @@
 void intro()
 {
     int alpha = 255;
-    float fadeSpeed = 0.07;
     SDL_Texture* logo;
     SDL_Texture* logoUnfocus;
 
@@ -23,12 +22,15 @@ void intro()
     }
     SDL_RenderCopy(rend, logo, NULL, NULL);
     SDL_RenderPresent(rend);
+
+    SDL_DestroyTexture(logo);
+    SDL_DestroyTexture(logoUnfocus);
 }
 
 int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor) {
 
     SDL_Event mouse;
-    MOUSE_POS* position = (MOUSE_POS*)malloc(sizeof(MOUSE_POS));
+    MOUSE_POS position;
     static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
 
     SDL_SetCursor(cursor.arrow);
@@ -41,14 +43,14 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
             {
                 if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
                 {
-                    position->x = mouse.motion.x;
-                    position->y = mouse.motion.y;
+                    position.x = mouse.motion.x;
+                    position.y = mouse.motion.y;
                 }
             }
 
-            change_yes = verifyPosMouse(ALL_Buttons[0], position);
-            points_yes = verifyPosMouse(ALL_Buttons[1], position);
-            go_yes = verifyPosMouse(ALL_Buttons[2], position);
+            change_yes = verifyPosMouse(ALL_Buttons[0], &position);
+            points_yes = verifyPosMouse(ALL_Buttons[1], &position);
+            go_yes = verifyPosMouse(ALL_Buttons[2], &position);
         }
     }
 
@@ -61,24 +63,25 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
     case SDL_MOUSEBUTTONUP:
         if (SDL_BUTTON_LEFT)
         {
-            SDL_SetCursor(cursor.hand);
-            if (distMouseButton(ALL_Buttons[0], position))
+            if (distMouseButton(ALL_Buttons[0], &position))
             {
-                closeRequested = deployMenuCall(ALL_Buttons, position, mouse, interestPoints, bg, map, lines, twoPoints);
+                SDL_SetCursor(cursor.hand);
+                closeRequested = deployMenuCall(ALL_Buttons, &position, mouse, interestPoints, bg, map, lines, twoPoints);
             }
 
-            if (distMouseButton(ALL_Buttons[1], position))
+            if (distMouseButton(ALL_Buttons[1], &position))
             {
+                SDL_SetCursor(cursor.hand);
                 redrawAll(*bg, ALL_Buttons, *interestPoints);
 
                 twoPoints->startP = NULL;
                 twoPoints->endP = NULL;
                 drawAllInterestPoints(*interestPoints, RED);
                 SDL_RenderPresent(rend);
-                selectPointsMap(&twoPoints, *interestPoints, position, *map);
+                selectPointsMap(&twoPoints, *interestPoints, &position, *map);
             }
 
-            if (distMouseButton(ALL_Buttons[2], position))
+            if (distMouseButton(ALL_Buttons[2], &position))
             {
                 if (twoPoints->startP != NULL && twoPoints->endP != NULL)
                 {
@@ -101,7 +104,7 @@ int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, I
 int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints)
 {
     int swapTexture = 0, exit_yes = 0, bool = 0, closeRequested = 0;
-    MOUSE_POS* position1 = (MOUSE_POS*)malloc(sizeof(MOUSE_POS));
+    MOUSE_POS position1;
 
     while (bool == 0)
     {
@@ -113,29 +116,30 @@ int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, IN
                 {
                     if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
                     {
-                        position1->x = mouse.motion.x;
-                        position1->y = mouse.motion.y;
+                        position1.x = mouse.motion.x;
+                        position1.y = mouse.motion.y;
                     }
                 }
 
-                swapTexture = verifyPosMouse(ALL_Buttons[3], position1);
-                exit_yes = verifyPosMouse(ALL_Buttons[4], position1);
+                swapTexture = verifyPosMouse(ALL_Buttons[3], &position1);
+                exit_yes = verifyPosMouse(ALL_Buttons[4], &position1);
                 selectTexture(swapTexture, ALL_Buttons[3]);
                 selectTexture(exit_yes, ALL_Buttons[4]);
                 SDL_RenderPresent(rend);
 
                 if (mouse.type == SDL_MOUSEBUTTONUP)
                 {
-                    if (distMouseButton(ALL_Buttons[4], position1))
+                    if (distMouseButton(ALL_Buttons[4], &position1))
                     {
+                        freeOnChange(*map,*bg, *interestPoints);
                         changeMap(map, lines, interestPoints, bg, twoPoints, ALL_Buttons);
                         bool = 1;
                     }
-                    else if (distMouseButton(ALL_Buttons[0], position1))
+                    else if (distMouseButton(ALL_Buttons[0], &position1))
                     {
                         bool = 1;
                     }
-                    else if (distMouseButton(ALL_Buttons[3], position1))
+                    else if (distMouseButton(ALL_Buttons[3], &position1))
                     {
                         sdl_destroy();
                         closeRequested = 1;
@@ -277,35 +281,21 @@ int verifyPosMouse(BUTTON button, MOUSE_POS* position)
 
 void initButtons(BUTTON* ALL_Buttons)
 {
+    ALL_Buttons[0].normal_ver = bgInit("../resources/Button_menu.png");
+    ALL_Buttons[0].grey_ver = bgInit("../resources/Button_menu_grey.png");
+    ALL_Buttons[1].normal_ver = bgInit("../resources/Button_points.png");
+    ALL_Buttons[1].grey_ver = bgInit("../resources/Button_points_grey.png");
+    ALL_Buttons[2].normal_ver = bgInit("../resources/Button_go.png");
+    ALL_Buttons[2].grey_ver = bgInit("../resources/Button_go_grey.png");
 
-    ALL_Buttons[0].normal_ver = bgInit("./resources/Button_menu.png");
-    ALL_Buttons[0].grey_ver = bgInit("./resources/Button_menu_grey.png");
-    ALL_Buttons[1].normal_ver = bgInit("./resources/Button_points.png");
-    ALL_Buttons[1].grey_ver = bgInit("./resources/Button_points_grey.png");
-    ALL_Buttons[2].normal_ver = bgInit("./resources/Button_go.png");
-    ALL_Buttons[2].grey_ver = bgInit("./resources/Button_go_grey.png");
+    ALL_Buttons[3].normal_ver = bgInit("../resources/exit_button.png");
+    ALL_Buttons[3].grey_ver = bgInit("../resources/exit_button_grey.png");
+    ALL_Buttons[4].normal_ver = bgInit("../resources/Swap_button.png");
+    ALL_Buttons[4].grey_ver = bgInit("../resources/Swap_button_grey.png");
 
-    ALL_Buttons[3].normal_ver = bgInit("./resources/exit_button.png");
-    ALL_Buttons[3].grey_ver = bgInit("./resources/exit_button_grey.png");
-    ALL_Buttons[4].normal_ver = bgInit("./resources/Swap_button.png");
-    ALL_Buttons[4].grey_ver = bgInit("./resources/Swap_button_grey.png");
+    ALL_Buttons[5].normal_ver = bgInit("../resources/error_message.png");
 
-    ALL_Buttons[5].normal_ver = bgInit("./resources/error_message.png");
-
-    //ALL_Buttons[0].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_menu.png");
-    //ALL_Buttons[0].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_menu_grey.png");
-    //ALL_Buttons[1].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_points.png");
-    //ALL_Buttons[1].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_points_grey.png");
-    //ALL_Buttons[2].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_go.png");
-    //ALL_Buttons[2].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Button_go_grey.png");
-
-    //ALL_Buttons[3].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/exit_button.png");
-    //ALL_Buttons[3].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/exit_button_grey.png");
-    //ALL_Buttons[4].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Swap_button.png");
-    //ALL_Buttons[4].grey_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/Swap_button_grey.png");
-
-    //ALL_Buttons[5].normal_ver = bgInit("../../../SIMULACION_GRAFICA/resources/interface/error_message.png");
-
+    buttonSetDim(ALL_Buttons);
 }
 
 void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints)
@@ -385,9 +375,9 @@ INTERLIST* initInterestpoints(MAP* map)
             interestPoint.x = map->points[i].x;
             interestPoint.y = map->points[i].y;
             interestPoint.type = RED;
-            interestPoint.textureRed = bgInit("./resources/Button_red_locate.png");
-            interestPoint.textureStart = bgInit("./resources/Button_green_locate.png");
-            interestPoint.textureEnd = bgInit("./resources/Button_purple_locate.png");
+            interestPoint.textureRed = bgInit("../resources/Button_red_locate.png");
+            interestPoint.textureStart = bgInit("../resources/Button_green_locate.png");
+            interestPoint.textureEnd = bgInit("../resources/Button_purple_locate.png");
             interestPoint.dim.w = 20;
             interestPoint.dim.h = 27;
             interestPoint.dim.x = interestPoint.x - 10;
@@ -496,5 +486,23 @@ void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture*
     SDL_RenderClear(rend);
     reInitAll(map, lines, interestPoints, bg, twoPoints);
     redrawAll(*bg, ALL_Buttons, *interestPoints);
-    // LLamar a una funcion que haga un init general.
+}
+
+void freeOnChange(MAP* map,SDL_Texture* bg, INTERLIST * interestPoints)
+{
+    SDL_DestroyTexture(bg);
+    free(map);
+
+    INTERLIST* aux;
+
+    while (interestPoints != NULL)
+    {
+        SDL_DestroyTexture(interestPoints->interestpoint.textureEnd);
+        SDL_DestroyTexture(interestPoints->interestpoint.textureRed);
+        SDL_DestroyTexture(interestPoints->interestpoint.textureStart);
+
+        aux = interestPoints;
+        interestPoints = interestPoints->ptrInterest;
+        free(aux);
+    }
 }

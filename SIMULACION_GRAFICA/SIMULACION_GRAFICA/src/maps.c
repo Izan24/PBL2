@@ -16,8 +16,6 @@ MAP* loadMap() {
 char* mapFileName() {
 	int i = 0, count = 0, counterZeros = 0;
 	char* izenArtx = (char*)malloc(sizeof(char) * 128);
-	char* unlucky = (char*)malloc(sizeof(char) * 128);
-	strcpy(unlucky, "Arre.json");
 	CHAR* filename = ChooseProgram();
 	while (filename == -1) {
 		printf("\nNo selesionaste un archivo kabron...");

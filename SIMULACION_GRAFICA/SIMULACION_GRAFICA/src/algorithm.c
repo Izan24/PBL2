@@ -49,7 +49,7 @@ int getCost(NODEPOINT p1, NODEPOINT p2) {
 }
 
 void getAllCost(MAP* map) {
-    int distX, distY, sum;
+
     for (int i = 0; i < map->nodePointAmount; i++) { // Iterates every single point
         for (int j = 0; j < map->points[i].connectionN; j++) { // Iterates every connection of every point
             map->points[i].connections[j].cost = getCost(map->points[i], map->points[map->points[i].connections[j].id]);
