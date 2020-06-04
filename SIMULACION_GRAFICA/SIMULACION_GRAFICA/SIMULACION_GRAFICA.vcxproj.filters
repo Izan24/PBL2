@@ -12,13 +12,7 @@
     <ClCompile Include="src\main.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\maps.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sdlInit.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\algorithm.c">
@@ -30,12 +24,15 @@
     <ClCompile Include="src\mainLoop.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\loadJSON.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\init.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\general.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\maps.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\graphics.h">
@@ -51,6 +48,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\mainLoop.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\loadJSON.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\init.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

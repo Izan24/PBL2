@@ -1,5 +1,5 @@
-#ifndef MAPS_H
-#define MAPS_H
+#ifndef LOADJSON_H
+#define LOADJSON_H
 
 
 typedef enum type { NODE, CROSSWALK, INTEREST }TYPE; // The types of the points being NODE (0), CROSSWALK (1) or INTEREST (2).
@@ -14,11 +14,11 @@ typedef struct line {
 	float cost; // The cost of moving through this line
 }LINE;
 
-struct connection {
+typedef struct connection {
 	int id; // the Id of the point which is connected to.
 	float cost; // The cost o the conection
 	LINE lineTo;
-};
+} CONN;
 
 
 /*
@@ -37,21 +37,24 @@ typedef struct node {
 	int y; // y coord.
 	int id; // Identification number of the node
 	int connectionN; // Number of connections the node has
-	struct connection connections[MAX_CONNECTIONS]; //Array of all the connections
+	CONN *connections; //Array of all the connections
 	int distanceFromEnd; //The distance from the end point.
 }NODEPOINT, * PNODEPOINT;
-
 
 /*
 The whole map structure.
 Includes the path to the background image, the name of the map, all the points and the amount of the points.
 */
 typedef struct map {
-	char IMGPath[MAX_PATH]; // The location of the IMG on the PC.
-	char mapName[MAX_STR]; // The nanme of the file that we are using.
-	NODEPOINT points[MAX_NODE]; // All the coordinates of the points.
+	char *IMGPath; // The location of the IMG on the PC.
+	char *mapName; // The nanme of the file that we are using.
+	NODEPOINT *points; // All the coordinates of the points.
 	int nodePointAmount; // Points that are connected int he map->
 }MAP;
+
+
+
+
 
 // This function loads the map using the other functions bellow.
 MAP* loadMap();
@@ -65,7 +68,7 @@ CHAR* ChooseProgram();
 // Opens the file specified on filename, reads it and returns its value in a char buffer.
 char* readJSON(char* FileName);
 
-// DEBUGGING   Prints the content of a MAP struct.
+// DEBUGGING Prints the content of a MAP struct.
 void printMap(MAP* map);
 
 // Parses a JSON buffer into useful structs.

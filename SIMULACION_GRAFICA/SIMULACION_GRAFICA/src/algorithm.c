@@ -257,37 +257,6 @@ void insertInHead(ANODE** printList, ASTAR point) {
     }
 }
 
-void drawPathDynamic(ANODE* printList, MAP* map) {
-    LINE aux;
-
-    while (printList != NULL) {
-        aux.x0 = map->points[printList->astar.from].x;
-        aux.y0 = map->points[printList->astar.from].y;
-
-        aux.x1 = map->points[printList->astar.current].x;
-        aux.y1 = map->points[printList->astar.current].y;
-
-        drawThiccLine(aux);
-        SDL_RenderPresent(rend);
-        printList = printList->ptrAstar;
-    }
-}
-
-void drawPath(ANODE* printList, MAP* map) {
-    LINE aux;
-
-    while (printList != NULL) {
-        aux.x0 = map->points[printList->astar.from].x;
-        aux.y0 = map->points[printList->astar.from].y;
-
-        aux.x1 = map->points[printList->astar.current].x;
-        aux.y1 = map->points[printList->astar.current].y;
-
-        drawThiccLine(aux);
-        printList = printList->ptrAstar;
-    }
-}
-
 void deleteFromList(ANODE** list, ASTAR deleteItem)
 {
     ANODE* previous;

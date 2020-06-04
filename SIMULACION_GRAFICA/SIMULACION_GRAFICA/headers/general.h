@@ -15,11 +15,13 @@ typedef enum boolean{FALSE, TRUE}BOOL; // A simple boolean enum
 #include <stdio.h>
 #include <windows.h>
 #include <commdlg.h>
+#include <math.h>
 #include "sdlDefine.h"
-#include "maps.h"
+#include "loadJSON.h"
 #include "algorithm.h"
-#include "graphics.h"
 #include "userInterface.h"
+#include "graphics.h"
 #include "mainLoop.h"
+#include "init.h"
 
 #endif // GENERAL_H

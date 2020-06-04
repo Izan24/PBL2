@@ -1,10 +1,10 @@
 #include "general.h"
-#include "userInterface.h"
-#include <math.h>
+#include "mainLoop.h"
 
-void initApp(MAP* map, INTERLIST** interestPoints, SDL_Texture** bg, STARTEND** twoPoints, ANODE** printList, MOUSE_POS** position, WHEELCHAIR** wheelChair, BOOMER** boomer, struct Cursors cursor, double* angle, int* thId, int* writePointId)
+void initApp(MAP* map, INTERLIST** interestPoints, SDL_Texture** bg, STARTEND** twoPoints, ANODE** printList, MOUSE_POS** position, WHEELCHAIR** wheelChair, BOOMER** boomer, struct Cursors cursor, double* angle, int* thId, int* writePointId, BUTTON *ALL_Buttons)
 {
-    //*map = loadMap();
+
+    initButtons(ALL_Buttons);
 
     *interestPoints = initInterestpoints(map); // Get all the interest poits
 
@@ -35,18 +35,39 @@ void initApp(MAP* map, INTERLIST** interestPoints, SDL_Texture** bg, STARTEND** 
     (*boomer)->x = 0 - (*boomer)->dim.w;
 }
 
-BOOL loop(MAP** map, INTERLIST** interestPoints, SDL_Texture** bg, STARTEND** twoPoints, ANODE** printList, BUTTON* ALL_Buttons, MOUSE_POS** position, WHEELCHAIR** wheelChair, BOOMER** boomer, struct Cursors cursor, double angle, int thId, int writePointId)
+BOOL loop(MAP** map)
 {
+    BUTTON *ALL_Buttons = (BUTTON*)malloc(sizeof(BUTTON) * MAX_BUTTON_N);;
+    INTERLIST* interestPoints = NULL;
+    ANODE* printList = NULL;
+    STARTEND* twoPoints = NULL;
+    WHEELCHAIR* wheelChair = NULL;
+    BOOMER* boomer = NULL;
+    SDL_Texture* bg = NULL;
+    MOUSE_POS* position = NULL;
+
+    struct Cursors cursor;
+    cursor.arrow = NULL;
+    cursor.hand = NULL;
+
+    int writePointId = -1;
+    int thId = -1;
+    double angle = 0;
+
+    initApp(*map, &interestPoints, &bg, &twoPoints, &printList, &position, &wheelChair, &boomer, cursor, &angle, &thId, &writePointId, ALL_Buttons);
+
     BOOL closeRequested = FALSE;
 
     do
     {
-        closeRequested = checkActions(map, printList, twoPoints, interestPoints, ALL_Buttons, bg, position, wheelChair, boomer, cursor, &thId, &writePointId, angle);
+        closeRequested = checkActions(map, &printList, &twoPoints, &interestPoints, ALL_Buttons, &bg, &position, &wheelChair, &boomer, cursor, &thId, &writePointId, angle);
 
         SDL_RenderClear(rend);
-        drawAll(*bg, ALL_Buttons, *interestPoints, *wheelChair, *printList, *map, *boomer, angle, writePointId);
+        drawAll(bg, ALL_Buttons, interestPoints, wheelChair, printList, *map, boomer, angle, writePointId);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
+
+    free(ALL_Buttons);
 
     return closeRequested;
 }
@@ -125,7 +146,7 @@ BOOL checkActions(MAP** map, ANODE** printList, STARTEND** twoPoints, INTERLIST*
 
                         destroyAll(*map, *interestPoints, *bg, *twoPoints, *printList, *position, *wheelChair, *boomer, cursor);
                         *map = loadMap();
-                        initApp(*map, interestPoints, bg, twoPoints, printList, position, wheelChair, boomer, cursor, &angle, thId, writePointId);
+                        initApp(*map, interestPoints, bg, twoPoints, printList, position, wheelChair, boomer, cursor, &angle, thId, writePointId, ALL_Buttons);
                         intro();
                     }
                     break;
@@ -382,6 +403,13 @@ void destroyAll(MAP* map, INTERLIST* interestPoints, SDL_Texture* bg, STARTEND* 
     INTERLIST* intereestPAux;
     ANODE* printListAux;
 
+
+    for (int i = 0; i < map->nodePointAmount; i++) {
+        free(map->points[i].connections);
+    }
+
+    free(map->points);
+
     free(map);
 
     while (interestPoints != NULL)
@@ -413,6 +441,14 @@ void destroyAll(MAP* map, INTERLIST* interestPoints, SDL_Texture* bg, STARTEND* 
     SDL_DestroyTexture(boomer->textureFemale);
     SDL_DestroyTexture(boomer->textureMale);
     free(boomer);
+
+ /*   for (int i = 0; i < MAX_BUTTON_N-1; i++) {
+        SDL_DestroyTexture(ALL_Buttons[i].grey_ver);
+        SDL_DestroyTexture(ALL_Buttons[i].normal_ver);
+    }
+    SDL_DestroyTexture(ALL_Buttons[5].normal_ver);
+
+    free(ALL_Buttons);*/
 
     SDL_FreeCursor(cursor.arrow);
     SDL_FreeCursor(cursor.hand);
@@ -542,4 +578,22 @@ int searchTH(MAP* map)
     }
 
     return thId;
+}
+
+int SDLDestroy()
+{
+
+    if (rend)// It enters here only if rend is defined and same with the other variables
+    {
+        SDL_DestroyRenderer(rend);
+    }
+
+    if (window)
+    {
+        SDL_DestroyWindow(window);
+    }
+
+    SDL_Quit();
+
+    return 0;
 }

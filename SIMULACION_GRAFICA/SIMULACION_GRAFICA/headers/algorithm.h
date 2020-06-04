@@ -32,8 +32,6 @@ void insertInList(ANODE** listen, ASTAR insertion); // Inserts the structure in 
 ASTAR searchTheLowestPoint(ANODE* mainList); // Searches and returns the point with the lowest TOTAL cost in the list
 ANODE* returnPathAnode(ANODE* endList, int startId, int endId);
 void insertInHead(ANODE** printList, ASTAR point);
-void drawPathDynamic(ANODE* printList, MAP* map);
-void drawPath(ANODE* printList, MAP* map);
 void deleteFromList(ANODE** list, ASTAR deleteItem);
 ANODE* previousItem(ANODE* list, ASTAR deleteitem);
 void setPoint(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i);
