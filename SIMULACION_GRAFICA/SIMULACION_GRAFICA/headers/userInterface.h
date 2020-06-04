@@ -14,9 +14,30 @@ struct Cursors {
 	SDL_Cursor* hand;
 };
 
+typedef struct Wheelchair {
+	float x;
+	float y;
+	float angle;
+	BOOL boomerOnTop;
+	SDL_Texture* textureNoBoomer;
+	SDL_Texture* textureWithBoomer;
+	SDL_Rect dim;
+}WHEELCHAIR;
+
+typedef struct Boomer {
+	int x;
+	int y;
+	SDL_Texture* textureMale;
+	SDL_Texture* textureFemale;
+	BOOL male;
+	SDL_Rect dim;
+}BOOMER;
+
 typedef struct Button {
 	SDL_Rect dim;
+	BOOL enabled;
 	int radius;
+	BOOL mouseOnTop;
 	SDL_Texture* normal_ver;
 	SDL_Texture* grey_ver;
 	//int state;
@@ -44,26 +65,29 @@ typedef struct interList {
 }INTERLIST;
 
 void intro();
-int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor);
+//int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor);
 int verifyPosMouse(BUTTON button, MOUSE_POS* position);
-int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints);
+//int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints, ANODE* printlist);
 int distMouseButton(BUTTON button, MOUSE_POS* position);
-void selectTexture(int which, BUTTON button);
+//void selectTexture(int which, BUTTON button);
 void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mousePos, MAP* map);
 void selectStartEndP(MAP* map, INTERLIST* iPointsList, STARTEND** twoPoints, int startEnd); // Satrtend == 0 if you want to get the start point and == 1 if you want to get the endP
 int verifyPosMouse(BUTTON button, MOUSE_POS* position);
 void initButtons(BUTTON* ALL_Buttons);
-void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints);
+void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints, MAP* map, ANODE* printList, WHEELCHAIR* wheelChair, BOOMER* boomer, double angle, int writePointId);
 void buttonSetDim(BUTTON* ALL_Buttons);
 INTERLIST* initInterestpoints(MAP* map);
 void insertInterestPointInHead(INTERLIST** list, INTERESTPOINT point);
-void drawAllInterestPoints(INTERLIST* interestPoints, STAGE type);
-void setAllToRed(INTERLIST* interestList);
+//void drawAllInterestPoints(INTERLIST* interestPoints, STAGE type);
+//void setAllToRed(INTERLIST* interestList);
 void setColor(INTERLIST* interestList, STAGE color, int id);
-void redrawAll(SDL_Texture* bg, BUTTON ALL_Buttons[], INTERESTPOINT* interestPoints);
-void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture** bg, STARTEND* twoPoints, BUTTON ALL_Buttons[]);
-void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints);
+//void redrawAll(SDL_Texture* bg, BUTTON ALL_Buttons[], INTERLIST* interestPoints, MAP* map, ANODE* printList);
+//void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture** bg, STARTEND* twoPoints, BUTTON ALL_Buttons[], ANODE* printList);
+//void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints);
 void drawText(const char* message);
+int searchTH(MAP* map);
+void initWheelChair(WHEELCHAIR* wheelChair);
+void initBoomer(BOOMER* boomer);
 
 
 

@@ -1,53 +1,37 @@
 #include <stdio.h>
 #include "general.h"
 
-int main(){
+int main() 
+{
+    MAP* map;
+    BUTTON ALL_Buttons[MAX_BUTTON_N];
+    INTERLIST* interestPoints = NULL;
+    ANODE* printList = NULL;
+    STARTEND* twoPoints = NULL;
+    struct Cursors cursor;
+    cursor.arrow = NULL;
+    cursor.hand= NULL;
+    SDL_Texture* bg = NULL;
+    MOUSE_POS* position = NULL;
 
-    LINE lines[2000];
-    BOOL closeRequested = FALSE;
+    int writePointId = -1;
+    int thId = -1;
+    double angle = 0;
+
+    WHEELCHAIR* wheelChair = NULL;
+    BOOMER* boomer = NULL;
+
     sdl_init();
-    struct Cursors cursor = initCursor();
+
+    map = loadMap();
 
     intro();
 
-    MAP* map = loadMap();
-    SDL_Texture* bg = bgInit(map->IMGPath);
-    BUTTON ALL_Buttons[MAX_BUTTON_N];
-    INTERLIST* interestPoints;
-
-    STARTEND* twoPoints = (STARTEND*)malloc(sizeof(STARTEND));
-    twoPoints->startP = NULL;
-    twoPoints->endP = NULL;
-
-
-
-    SDL_RenderClear(rend);
-    SDL_RenderCopy(rend, bg, NULL, NULL);
-
     initButtons(ALL_Buttons);
 
-    interestPoints = initInterestpoints(map); // Get all the interest poits
+    initApp(map, &interestPoints, &bg, &twoPoints, &printList, &position, &wheelChair, &boomer, cursor, &angle, &thId, &writePointId);
 
-    getLines(lines, map);
-
-    //for (int i = 0; i < getLines(lines, map); i++) {
-    //    drawLineTo(lines[i], 0, 0, 255);
-    //    SDL_RenderPresent(rend);
-    //}
-
-    drawAllInterestPoints(interestPoints,RED);
-
-    //redrawAll(&map, lines, &interestPoints, &bg, twoPoints, ALL_Buttons);
-        
-    do
-    {
-        //SDL_RenderCopy(rend, bg, NULL, NULL);
-
-        closeRequested = initMenu(twoPoints, &map, ALL_Buttons, lines, &interestPoints, &bg, cursor);
-
-        SDL_RenderPresent(rend);
-    } while (closeRequested == FALSE);
-
+    loop(&map, &interestPoints, &bg,& twoPoints, &printList, ALL_Buttons, &position, &wheelChair, &boomer, cursor, angle, thId, writePointId);
 
     return 0;
 }

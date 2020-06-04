@@ -13,7 +13,11 @@ int sdl_init()
 
     Uint32 render_flags;
 
-    window = SDL_CreateWindow("Nombre del programa", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+    window = SDL_CreateWindow("A* WheelChairs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+
+    SDL_Surface* icon = IMG_Load("../debug/resources/aStaricon.png");
+    SDL_SetWindowIcon(window, icon);
+    SDL_FreeSurface(icon);
 
     if (!window)
     {

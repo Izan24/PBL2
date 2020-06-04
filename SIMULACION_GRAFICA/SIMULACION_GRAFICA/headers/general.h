@@ -20,6 +20,7 @@ typedef enum boolean{FALSE, TRUE}BOOL; // A simple boolean enum
 #include "algorithm.h"
 #include "graphics.h"
 #include "userInterface.h"
+#include "mainLoop.h"
 #include "initApplication.h"
 
 

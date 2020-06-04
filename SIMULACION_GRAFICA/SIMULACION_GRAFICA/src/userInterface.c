@@ -8,8 +8,8 @@ void intro()
     SDL_Texture* logo;
     SDL_Texture* logoUnfocus;
 
-    logo = bgInit("./resources/backgrounds/introIMG.png");
-    logoUnfocus = bgInit("./resources/backgrounds/introIMGunfocused.png");
+    logo = bgInit("../resources/backgrounds/introIMG.png");
+    logoUnfocus = bgInit("../resources/backgrounds/introIMGunfocused.png");
 
     SDL_SetTextureBlendMode(logoUnfocus, SDL_BLENDMODE_BLEND);
     while (alpha > 0)
@@ -29,156 +29,174 @@ void intro()
     SDL_DestroyTexture(logoUnfocus);
 }
 
-int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor) {
-
-    SDL_Event mouse;
-    MOUSE_POS position;
-    static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
-    INTERLIST* interListAux = *interestPoints;
-    NODEPOINT mousePosition;
-
-    SDL_SetCursor(cursor.arrow);
-
-    if (SDL_PollEvent(&mouse))
-    {
-        if (SDL_MOUSEMOTION)
-        {
-            if (mouse.motion.x > 0 && mouse.motion.x <= WINDOW_WIDTH)
-            {
-                if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
-                {
-                    position.x = mouse.motion.x;
-                    position.y = mouse.motion.y;
-                    mousePosition.x = mouse.motion.x;
-                    mousePosition.y = mouse.motion.y;
-                }
-            }
-
-            change_yes = verifyPosMouse(ALL_Buttons[0], &position);
-            points_yes = verifyPosMouse(ALL_Buttons[1], &position);
-            go_yes = verifyPosMouse(ALL_Buttons[2], &position);
-        }
-    }
-
-    selectTexture(change_yes, ALL_Buttons[0]);
-    selectTexture(points_yes, ALL_Buttons[1]);
-    selectTexture(go_yes, ALL_Buttons[2]);
-
-    switch (mouse.type)
-    {
-    case SDL_MOUSEBUTTONUP:
-        if (SDL_BUTTON_LEFT)
-        {
-            if (distMouseButton(ALL_Buttons[0], &position))
-            {
-                SDL_SetCursor(cursor.hand);
-                closeRequested = deployMenuCall(ALL_Buttons, &position, mouse, interestPoints, bg, map, lines, twoPoints);
-            }
-
-            if (distMouseButton(ALL_Buttons[1], &position))
-            {
-                SDL_SetCursor(cursor.hand);
-                redrawAll(*bg, ALL_Buttons, *interestPoints);
-
-                twoPoints->startP = NULL;
-                twoPoints->endP = NULL;
-                drawAllInterestPoints(*interestPoints, RED);
-                SDL_RenderPresent(rend);
-                selectPointsMap(&twoPoints, *interestPoints, &position, *map);
-            }
-
-            if (distMouseButton(ALL_Buttons[2], &position))
-            {
-                if (twoPoints->startP != NULL && twoPoints->endP != NULL)
-                {
-                    execAlgorithm(*map, lines, twoPoints->startP, twoPoints->endP);
-                }
-                else
-                {
-                    errorMessage(ALL_Buttons, *bg, *interestPoints);
-                }
-            }
-
-            while (interListAux != NULL) // check all interest Points
-            {
-
-                if (getCost(mousePosition, (*map)->points[interListAux->interestpoint.id]) < 10)
-                {
-                    redrawAll(*bg, ALL_Buttons, *interestPoints);
-                    drawText((*map)->points[interListAux->interestpoint.id].title);
-                }
-                interListAux = interListAux->ptrInterest;
-            }
-
-        }
-        break;
-    case SDL_QUIT:
-        return 0;
-    }
-
-    return closeRequested;
-}
-
-int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints)
-{
-    int swapTexture = 0, exit_yes = 0, bool = 0, closeRequested = 0;
-    MOUSE_POS position1;
-
-    while (bool == 0)
-    {
-        if (SDL_PollEvent(&mouse))
-        {
-            if (SDL_MOUSEMOTION)
-            {
-                if (mouse.motion.x > 0 && mouse.motion.x <= WINDOW_WIDTH)
-                {
-                    if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
-                    {
-                        position1.x = mouse.motion.x;
-                        position1.y = mouse.motion.y;
-                    }
-                }
-
-                swapTexture = verifyPosMouse(ALL_Buttons[3], &position1);
-                exit_yes = verifyPosMouse(ALL_Buttons[4], &position1);
-                selectTexture(swapTexture, ALL_Buttons[3]);
-                selectTexture(exit_yes, ALL_Buttons[4]);
-                SDL_RenderPresent(rend);
-
-                if (mouse.type == SDL_MOUSEBUTTONUP)
-                {
-                    if (distMouseButton(ALL_Buttons[4], &position1))
-                    {
-                        freeOnChange(*map, *bg, *interestPoints);
-                        changeMap(map, lines, interestPoints, bg, twoPoints, ALL_Buttons);
-                        bool = 1;
-                    }
-                    else if (distMouseButton(ALL_Buttons[0], &position1))
-                    {
-                        bool = 1;
-                    }
-                    else if (distMouseButton(ALL_Buttons[3], &position1))
-                    {
-                        sdl_destroy();
-                        closeRequested = 1;
-                        bool = 1;
-                    }
-                }
-            }
-        }
-    }
-
-    redrawAll(*bg, ALL_Buttons, *interestPoints);
-
-    return closeRequested;
-}
+//int initMenu(STARTEND* twoPoints, MAP** map, BUTTON* ALL_Buttons, LINE* lines, INTERLIST** interestPoints, SDL_Texture** bg, struct Cursors cursor) {
+//
+//    SDL_Event mouse;
+//    MOUSE_POS position;
+//    static int change_yes = 0, points_yes = 0, go_yes = 0, closeRequested = 0;
+//    INTERLIST* interListAux = *interestPoints;
+//    NODEPOINT mousePosition;
+//    ANODE* printList = NULL;
+//
+//    /*
+//        ¡¡¡¡¡¡ ESTO NO ES MUY OPTIMO PORQUE LO BUSCO TODAS LAS VUELTAS Y NO VA A ACAMBIAR, SOLO DEBERIA
+//        VOLVER A BUSCARLO CUANDO HAYA UN CAMBIO DE MPA, CAMBIARE ESTO CUANDO EL MAIN LOOP NO SEA
+//        EL INIT MENU. !"!!!!!!!!!"!"!"!"!"!"
+//    */
+//    int thId = searchTH(*map);
+//
+//
+//    SDL_SetCursor(cursor.arrow);
+//
+//    if (SDL_PollEvent(&mouse))
+//    {
+//        if (SDL_MOUSEMOTION)
+//        {
+//            if (mouse.motion.x > 0 && mouse.motion.x <= WINDOW_WIDTH)
+//            {
+//                if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
+//                {
+//                    position.x = mouse.motion.x;
+//                    position.y = mouse.motion.y;
+//                    mousePosition.x = mouse.motion.x;
+//                    mousePosition.y = mouse.motion.y;
+//                }
+//            }
+//
+//            change_yes = verifyPosMouse(ALL_Buttons[0], &position);
+//            points_yes = verifyPosMouse(ALL_Buttons[1], &position);
+//            go_yes = verifyPosMouse(ALL_Buttons[2], &position);
+//        }
+//    }
+//
+//    selectTexture(change_yes, ALL_Buttons[0]);
+//    selectTexture(points_yes, ALL_Buttons[1]);
+//    selectTexture(go_yes, ALL_Buttons[2]);
+//
+//    switch (mouse.type)
+//    {
+//    case SDL_MOUSEBUTTONUP:
+//        if (SDL_BUTTON_LEFT)
+//        {
+//            if (distMouseButton(ALL_Buttons[0], &position))
+//            {
+//                SDL_SetCursor(cursor.hand);
+//                closeRequested = deployMenuCall(ALL_Buttons, &position, mouse, interestPoints, bg, map, lines, twoPoints, printList);
+//            }
+//
+//            if (distMouseButton(ALL_Buttons[1], &position))
+//            {
+//                SDL_SetCursor(cursor.hand);
+//                redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printList);
+//
+//                twoPoints->startP = NULL;
+//                twoPoints->endP = NULL;
+//                drawAllInterestPoints(*interestPoints, RED);
+//                SDL_RenderPresent(rend);
+//                selectPointsMap(&twoPoints, *interestPoints, &position, *map);
+//            }
+//
+//            if (distMouseButton(ALL_Buttons[2], &position))
+//            {
+//                if (twoPoints->startP != NULL && twoPoints->endP != NULL)
+//                {
+//                    printList = execAlgorithm(*map, lines, &(*map)->points[thId], twoPoints->startP);
+//                    //
+//                    printList = execAlgorithm(*map, lines, twoPoints->startP, twoPoints->endP);
+//                    //
+//                    printList = execAlgorithm(*map, lines, twoPoints->endP, &(*map)->points[thId]);
+//                    //
+//                }
+//                else
+//                {
+//                    errorMessage(ALL_Buttons, *bg, *interestPoints, *map, printList);
+//                }
+//            }
+//
+//            while (interListAux != NULL) // check all interest Points
+//            {
+//
+//                if (getCost(mousePosition, (*map)->points[interListAux->interestpoint.id]) < 10)
+//                {
+//                    redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printList);
+//                    drawText((*map)->points[interListAux->interestpoint.id].title);
+//                }
+//                interListAux = interListAux->ptrInterest;
+//            }
+//
+//        }
+//        break;
+//    case SDL_QUIT:
+//        return 0;
+//    }
+//
+//
+//        redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printList);
+//   
+//
+//    return closeRequested;
+//}
+//
+//int deployMenuCall(BUTTON* ALL_Buttons, MOUSE_POS* position, SDL_Event mouse, INTERLIST** interestPoints, SDL_Texture** bg, MAP** map, LINE lines[], STARTEND* twoPoints, ANODE* printlist)
+//{
+//    int swapTexture = 0, exit_yes = 0, bool = 0, closeRequested = 0;
+//    MOUSE_POS position1;
+//
+//    while (bool == 0)
+//    {
+//        if (SDL_PollEvent(&mouse))
+//        {
+//            if (SDL_MOUSEMOTION)
+//            {
+//                if (mouse.motion.x > 0 && mouse.motion.x <= WINDOW_WIDTH)
+//                {
+//                    if (mouse.motion.y > 0 && mouse.motion.y <= WINDOW_HEIGHT)
+//                    {
+//                        position1.x = mouse.motion.x;
+//                        position1.y = mouse.motion.y;
+//                    }
+//                }
+//
+//                swapTexture = verifyPosMouse(ALL_Buttons[3], &position1);
+//                exit_yes = verifyPosMouse(ALL_Buttons[4], &position1);
+//                selectTexture(swapTexture, ALL_Buttons[3]);
+//                selectTexture(exit_yes, ALL_Buttons[4]);
+//                SDL_RenderPresent(rend);
+//
+//                if (mouse.type == SDL_MOUSEBUTTONUP)
+//                {
+//                    if (distMouseButton(ALL_Buttons[4], &position1))
+//                    {
+//                        freeOnChange(*map, *bg, *interestPoints);
+//                        changeMap(map, lines, interestPoints, bg, twoPoints, ALL_Buttons, printlist);
+//                        bool = 1;
+//                    }
+//                    else if (distMouseButton(ALL_Buttons[0], &position1))
+//                    {
+//                        bool = 1;
+//                    }
+//                    else if (distMouseButton(ALL_Buttons[3], &position1))
+//                    {
+//                        sdl_destroy();
+//                        closeRequested = 1;
+//                        bool = 1;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printlist);
+//
+//    return closeRequested;
+//}
 
 int distMouseButton(BUTTON button, MOUSE_POS* position)
 {
     float distance = 0; int x, y; int boolean = 0;
 
-    x = (button.dim.x + 37);
-    y = (button.dim.y + 37);
+    x = (button.dim.x + button.dim.w / 2);
+    y = (button.dim.y + button.dim.h / 2);
     x = x - position->x;
     y = y - position->y;
     distance = (x * x) + (y * y);
@@ -190,17 +208,17 @@ int distMouseButton(BUTTON button, MOUSE_POS* position)
     return boolean;
 }
 
-void selectTexture(int which, BUTTON button) {
-
-    if (which == 1) {
-        SDL_QueryTexture(button.grey_ver, NULL, NULL, &button.dim.w, &button.dim.h);
-        SDL_RenderCopy(rend, button.grey_ver, NULL, &button.dim);
-    }
-    else {
-        SDL_QueryTexture(button.normal_ver, NULL, NULL, &button.dim.w, &button.dim.h);
-        SDL_RenderCopy(rend, button.normal_ver, NULL, &button.dim);
-    }
-}
+//void selectTexture(int which, BUTTON button) {
+//
+//    if (which == 1) {
+//        SDL_QueryTexture(button.grey_ver, NULL, NULL, &button.dim.w, &button.dim.h);
+//        SDL_RenderCopy(rend, button.grey_ver, NULL, &button.dim);
+//    }
+//    else {
+//        SDL_QueryTexture(button.normal_ver, NULL, NULL, &button.dim.w, &button.dim.h);
+//        SDL_RenderCopy(rend, button.normal_ver, NULL, &button.dim);
+//    }
+//}
 
 void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mousePos, MAP* map)
 {
@@ -224,7 +242,7 @@ void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mo
         if ((*twoPoints)->startP != NULL) // To avoid warnings
         {
             setColor(iPointsList, START, (*twoPoints)->startP->id);
-            drawAllInterestPoints(iPointsList, START);
+            printInterestPoints(iPointsList);
             SDL_RenderPresent(rend);
         }
 
@@ -236,7 +254,7 @@ void selectPointsMap(STARTEND** twoPoints, INTERLIST* iPointsList, MOUSE_POS* mo
         if ((*twoPoints)->endP != NULL)
         {
             setColor(iPointsList, END, (*twoPoints)->endP->id);
-            drawAllInterestPoints(iPointsList, END);
+            printInterestPoints(iPointsList);
             SDL_RenderPresent(rend);
         }
     }
@@ -316,7 +334,7 @@ void initButtons(BUTTON* ALL_Buttons)
     buttonSetDim(ALL_Buttons);
 }
 
-void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints)
+void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoints, MAP* map, ANODE* printList, WHEELCHAIR* wheelChair, BOOMER* boomer, double angle, int writePointId)
 {
     int bool = 0;
     SDL_Event mouse1;
@@ -328,7 +346,7 @@ void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoint
     {
         if (SDL_PollEvent(&mouse1))
         {
-            if (mouse1.type == SDL_MOUSEBUTTONDOWN)
+            if (mouse1.type == SDL_MOUSEBUTTONUP)
             {
                 if (SDL_BUTTON_LEFT)
                 {
@@ -339,7 +357,7 @@ void errorMessage(BUTTON* ALL_Buttons, SDL_Texture* bg, INTERLIST* interestPoint
 
     } while (bool == 0);
 
-    redrawAll(bg, ALL_Buttons, interestPoints);
+    drawAll(bg, ALL_Buttons, interestPoints, wheelChair, printList, map, boomer, angle, writePointId);
 }
 
 void buttonSetDim(BUTTON* ALL_Buttons)
@@ -348,36 +366,48 @@ void buttonSetDim(BUTTON* ALL_Buttons)
     ALL_Buttons[0].dim.y = 0;
     ALL_Buttons[0].dim.w = 75;
     ALL_Buttons[0].dim.h = 75;
-    ALL_Buttons[0].radius = 37;
+    ALL_Buttons[0].radius = ALL_Buttons[0].dim.w / 2;
+    ALL_Buttons[0].enabled = TRUE;
+    ALL_Buttons[0].mouseOnTop = FALSE;
 
     ALL_Buttons[1].dim.x = 1250;
     ALL_Buttons[1].dim.y = 600;
     ALL_Buttons[1].dim.w = 75;
     ALL_Buttons[1].dim.h = 75;
-    ALL_Buttons[1].radius = 37;
+    ALL_Buttons[1].radius = ALL_Buttons[1].dim.w / 2;
+    ALL_Buttons[1].enabled = TRUE;
+    ALL_Buttons[1].mouseOnTop = FALSE;
 
     ALL_Buttons[2].dim.x = 1250;
     ALL_Buttons[2].dim.y = 680;
     ALL_Buttons[2].dim.w = 75;
     ALL_Buttons[2].dim.h = 75;
-    ALL_Buttons[2].radius = 37;
+    ALL_Buttons[2].radius = ALL_Buttons[2].dim.w / 2;
+    ALL_Buttons[2].enabled = TRUE;
+    ALL_Buttons[2].mouseOnTop = FALSE;
 
     ALL_Buttons[3].dim.x = 10;
     ALL_Buttons[3].dim.y = 200;
     ALL_Buttons[3].dim.w = 75;
     ALL_Buttons[3].dim.h = 75;
-    ALL_Buttons[3].radius = 37;
+    ALL_Buttons[3].radius = ALL_Buttons[3].dim.w / 2;
+    ALL_Buttons[3].enabled = FALSE;
+    ALL_Buttons[3].mouseOnTop = FALSE;
 
     ALL_Buttons[4].dim.x = 10;
     ALL_Buttons[4].dim.y = 100;
     ALL_Buttons[4].dim.w = 75;
     ALL_Buttons[4].dim.h = 75;
-    ALL_Buttons[4].radius = 37;
+    ALL_Buttons[4].radius = ALL_Buttons[4].dim.w / 2;
+    ALL_Buttons[4].enabled = FALSE;
+    ALL_Buttons[4].mouseOnTop = FALSE;
 
     ALL_Buttons[5].dim.x = 480;
     ALL_Buttons[5].dim.y = 234;
     ALL_Buttons[5].dim.w = 75;
     ALL_Buttons[5].dim.h = 75;
+    ALL_Buttons[5].enabled = FALSE;
+    ALL_Buttons[5].mouseOnTop = FALSE;
 }
 
 INTERLIST* initInterestpoints(MAP* map)
@@ -421,39 +451,39 @@ void insertInterestPointInHead(INTERLIST** list, INTERESTPOINT point) {
     }
 }
 
-void drawAllInterestPoints(INTERLIST* interestPoints, STAGE type)
-{
-    while (interestPoints != NULL) // draw the interest points
-    {
-        if (type == RED)
-        {
-            if (interestPoints->interestpoint.type == type)
-            {
-                SDL_RenderCopy(rend, interestPoints->interestpoint.textureRed, NULL, &interestPoints->interestpoint.dim);
-                //SDL_RenderPresent(rend);
-            }
-        }
-        else if (type == START)
-        {
-            if (interestPoints->interestpoint.type == type)
-            {
-                SDL_RenderCopy(rend, interestPoints->interestpoint.textureStart, NULL, &interestPoints->interestpoint.dim);
-                //SDL_RenderPresent(rend);
-            }
-        }
-        else
-        {
-            if (interestPoints->interestpoint.type == type)
-            {
-                SDL_RenderCopy(rend, interestPoints->interestpoint.textureEnd, NULL, &interestPoints->interestpoint.dim);
-                //SDL_RenderPresent(rend);
-            }
-        }
-
-        interestPoints = interestPoints->ptrInterest;
-    }
-    //SDL_RenderPresent(rend);
-}
+//void drawAllInterestPoints(INTERLIST* interestPoints, STAGE type)
+//{
+//    while (interestPoints != NULL) // draw the interest points
+//    {
+//        if (type == RED)
+//        {
+//            if (interestPoints->interestpoint.type == type)
+//            {
+//                SDL_RenderCopy(rend, interestPoints->interestpoint.textureRed, NULL, &interestPoints->interestpoint.dim);
+//                //SDL_RenderPresent(rend);
+//            }
+//        }
+//        else if (type == START)
+//        {
+//            if (interestPoints->interestpoint.type == type)
+//            {
+//                SDL_RenderCopy(rend, interestPoints->interestpoint.textureStart, NULL, &interestPoints->interestpoint.dim);
+//                //SDL_RenderPresent(rend);
+//            }
+//        }
+//        else
+//        {
+//            if (interestPoints->interestpoint.type == type)
+//            {
+//                SDL_RenderCopy(rend, interestPoints->interestpoint.textureEnd, NULL, &interestPoints->interestpoint.dim);
+//                //SDL_RenderPresent(rend);
+//            }
+//        }
+//
+//        interestPoints = interestPoints->ptrInterest;
+//    }
+//    //SDL_RenderPresent(rend);
+//}
 
 void setAllToRed(INTERLIST* interestList)
 {
@@ -481,49 +511,49 @@ void setColor(INTERLIST* interestList, STAGE color, int id)
     }
 }
 
-void redrawAll(SDL_Texture* bg, BUTTON ALL_Buttons[], INTERESTPOINT* interestPoints)
-{
-    SDL_RenderClear(rend);
-    SDL_RenderCopy(rend, bg, NULL, NULL);
+//void redrawAll(SDL_Texture* bg, BUTTON ALL_Buttons[], INTERLIST* interestPoints, MAP* map, ANODE* printList)
+//{
+//    SDL_RenderCopy(rend, bg, NULL, NULL);
+//
+//    selectTexture(0, ALL_Buttons[0]);
+//    selectTexture(0, ALL_Buttons[1]);
+//    selectTexture(0, ALL_Buttons[2]);
+//
+//    setAllToRed(interestPoints);
+//    drawAllInterestPoints(interestPoints, RED);
+//
+//    setAllToRed(interestPoints);
+//
+//    drawAllInterestPoints(interestPoints, RED);
+//
+//    drawPath(printList, map);
+//}
 
-    selectTexture(0, ALL_Buttons[0]);
-    selectTexture(0, ALL_Buttons[1]);
-    selectTexture(0, ALL_Buttons[2]);
+//void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture** bg, STARTEND* twoPoints, BUTTON ALL_Buttons[], ANODE* printList)
+//{
+//    SDL_RenderClear(rend);
+//    reInitAll(map, lines, interestPoints, bg, twoPoints);
+//    redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printList);
+//}
 
-    setAllToRed(interestPoints);
-    drawAllInterestPoints(interestPoints, RED);
-
-    setAllToRed(interestPoints);
-
-    drawAllInterestPoints(interestPoints, RED);
-    SDL_RenderPresent(rend);
-}
-
-void changeMap(MAP** map, LINE lines[], INTERLIST** interestPoints, SDL_Texture** bg, STARTEND* twoPoints, BUTTON ALL_Buttons[])
-{
-    SDL_RenderClear(rend);
-    reInitAll(map, lines, interestPoints, bg, twoPoints);
-    redrawAll(*bg, ALL_Buttons, *interestPoints);
-}
-
-void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints)
-{
-    SDL_DestroyTexture(bg);
-    free(map);
-
-    INTERLIST* aux;
-
-    while (interestPoints != NULL)
-    {
-        SDL_DestroyTexture(interestPoints->interestpoint.textureEnd);
-        SDL_DestroyTexture(interestPoints->interestpoint.textureRed);
-        SDL_DestroyTexture(interestPoints->interestpoint.textureStart);
-
-        aux = interestPoints;
-        interestPoints = interestPoints->ptrInterest;
-        free(aux);
-    }
-}
+//void freeOnChange(MAP* map, SDL_Texture* bg, INTERLIST* interestPoints)
+//{
+//    SDL_DestroyTexture(bg);
+//    free(map);
+//
+//    INTERLIST* aux;
+//
+//    while (interestPoints != NULL)
+//    {
+//        SDL_DestroyTexture(interestPoints->interestpoint.textureEnd);
+//        SDL_DestroyTexture(interestPoints->interestpoint.textureRed);
+//        SDL_DestroyTexture(interestPoints->interestpoint.textureStart);
+//
+//        aux = interestPoints;
+//        interestPoints = interestPoints->ptrInterest;
+//        free(aux);
+//    }
+//}
 
 void drawText(const char* message)
 {
@@ -552,4 +582,56 @@ void drawText(const char* message)
     SDL_DestroyTexture(text);
     TTF_CloseFont(font);
     SDL_FreeSurface(textSurface);
+}
+
+int searchTH(MAP* map)
+{
+    int i = 0, thId = -1;
+    BOOL found = FALSE;
+
+    while (i < map->nodePointAmount && found == FALSE)
+    {
+        if (strcmp(map->points[i].title, "Ayuntamiento") == 0)
+        {
+            thId = map->points[i].id;
+            found = TRUE;
+        }
+        i++;
+    }
+
+    return thId;
+}
+
+void drawPathWheelChair(ANODE* printList, MAP* map)
+{
+    LINE aux;
+
+    while (printList != NULL) {
+        aux.x0 = map->points[printList->astar.from].x;
+        aux.y0 = map->points[printList->astar.from].y;
+
+        aux.x1 = map->points[printList->astar.current].x;
+        aux.y1 = map->points[printList->astar.current].y;
+
+        drawThiccLine(aux);
+        printList = printList->ptrAstar;
+    }
+}
+
+void initWheelChair(WHEELCHAIR* wheelChair)
+{
+    wheelChair->dim.w = 40;
+    wheelChair->dim.h = 40;
+    wheelChair->textureNoBoomer = bgInit("../resources/wheelNoboomer.png");
+    wheelChair->textureWithBoomer = bgInit("../resources/wheelChair.png");
+}
+
+void initBoomer(BOOMER* boomer)
+{
+    boomer->dim.h = 40;
+    boomer->dim.w = 30;
+    boomer->male = TRUE;
+
+    boomer->textureMale = bgInit("../resources/boomerMale.png");
+    boomer->textureFemale = bgInit("../resources/boomerFemale.png");
 }
