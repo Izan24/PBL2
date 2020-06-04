@@ -504,8 +504,12 @@ void destroyAll(MAP* map, INTERLIST* interestPoints, SDL_Texture* bg, STARTEND* 
 
     free(position);
 
+    SDL_DestroyTexture(wheelChair->textureNoBoomer);
+    SDL_DestroyTexture(wheelChair->textureWithBoomer);
     free(wheelChair);
-
+    
+    SDL_DestroyTexture(boomer->textureFemale);
+    SDL_DestroyTexture(boomer->textureMale);
     free(boomer);
 
     SDL_FreeCursor(cursor.arrow);

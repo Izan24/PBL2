@@ -20,6 +20,8 @@ SDL_Texture* bgInit(const char* img)
 
 	bg = SDL_CreateTextureFromSurface(rend, surface);
 
+	SDL_FreeSurface(surface);
+
 	return bg;
 }
 

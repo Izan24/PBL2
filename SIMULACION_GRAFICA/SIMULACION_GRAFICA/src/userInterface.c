@@ -14,6 +14,7 @@ void intro()
     SDL_SetTextureBlendMode(logoUnfocus, SDL_BLENDMODE_BLEND);
     while (alpha > 0)
     {
+        SDL_RenderClear(rend);
         SDL_RenderCopy(rend, logo, NULL, NULL);
         SDL_SetTextureAlphaMod(logoUnfocus, alpha);
         SDL_RenderCopy(rend, logoUnfocus, NULL, NULL);
@@ -24,6 +25,7 @@ void intro()
     SDL_RenderPresent(rend);
 
     SDL_Delay(250);
+    SDL_RenderClear(rend);
 
     SDL_DestroyTexture(logo);
     SDL_DestroyTexture(logoUnfocus);
@@ -557,13 +559,17 @@ void setColor(INTERLIST* interestList, STAGE color, int id)
 
 void drawText(const char* message)
 {
-    TTF_Font* font = TTF_OpenFont("../resources/fonts/Roboto-Light.ttf", 100);
+    int lenght;
+    int pixelsPerCharacter = 13;
+    lenght = strlen(message);
+
+    TTF_Font* font = TTF_OpenFont("../resources/fonts/Calibri Regular.TTF", 100);
 
     SDL_Rect textLocation;
-    textLocation.w = 300;
+    textLocation.w = lenght * pixelsPerCharacter;
     textLocation.h = 30;
-    textLocation.x = 0;
-    textLocation.y = WINDOW_HEIGHT - textLocation.h;
+    textLocation.x = 10;
+    textLocation.y = WINDOW_HEIGHT - textLocation.h + 3;
 
     SDL_Color color;
     color.a = 255;
