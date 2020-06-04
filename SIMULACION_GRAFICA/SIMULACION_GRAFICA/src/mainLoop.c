@@ -102,7 +102,10 @@ BOOL checkActions(MAP** map, ANODE** printList, STARTEND** twoPoints, INTERLIST*
 
                     (*twoPoints)->startP = NULL;
                     (*twoPoints)->endP = NULL;
-
+                    setAllToRed(*interestPoints);
+                    SDL_RenderClear(rend);
+                    drawAll(*bg, ALL_Buttons, *interestPoints, *wheelChair, *printList, *map, *boomer, angle, *writePointId);
+                    SDL_RenderPresent(rend);
                     selectPointsMap(twoPoints, *interestPoints, *position, *map);
                     break;
                 case DEPLOYABLE_MENU:
