@@ -27,7 +27,7 @@ int sdl_init()
     }
 
 
-    render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+    render_flags = SDL_RENDERER_ACCELERATED;
     rend = SDL_CreateRenderer(window, -1, render_flags);
 
     if (!rend)
@@ -54,7 +54,7 @@ int sdl_destroy()
     {
         SDL_DestroyRenderer(rend);
     }
-    
+
     if (window)
     {
         SDL_DestroyWindow(window);

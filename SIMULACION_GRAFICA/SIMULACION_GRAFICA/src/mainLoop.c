@@ -295,7 +295,7 @@ void moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* i
             if (wheelChair->y != nextY) wheelChair->y += vectorY;
 
             chechVectorStatus(wheelChair, vectorY, vectorX, nextY, nextX);
-
+            SDL_Delay(1000 / 120);
             SDL_RenderClear(rend);
             drawAll(bg, ALL_Buttons, interestPoints, wheelChair, pListAux, map, boomer, angle, writePoint);
             SDL_RenderPresent(rend);

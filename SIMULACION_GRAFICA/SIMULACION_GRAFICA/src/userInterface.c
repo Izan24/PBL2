@@ -20,6 +20,7 @@ void intro()
         SDL_RenderCopy(rend, logoUnfocus, NULL, NULL);
         alpha -= 2;
         SDL_RenderPresent(rend);
+        SDL_Delay(1000 / 60);
     }
     SDL_RenderCopy(rend, logo, NULL, NULL);
     SDL_RenderPresent(rend);
@@ -134,7 +135,7 @@ void intro()
 //
 //
 //        redrawAll(*bg, ALL_Buttons, *interestPoints, *map, printList);
-//   
+//
 //
 //    return closeRequested;
 //}
