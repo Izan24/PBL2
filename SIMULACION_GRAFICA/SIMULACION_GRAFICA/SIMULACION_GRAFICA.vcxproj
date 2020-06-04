@@ -37,6 +37,9 @@
     <ClInclude Include="headers\sdlDefine.h" />
     <ClInclude Include="headers\userInterface.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Debug\resources.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{9661B99F-2710-40F6-A5B9-9D11573A7138}</ProjectGuid>
