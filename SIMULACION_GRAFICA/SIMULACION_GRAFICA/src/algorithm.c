@@ -17,14 +17,14 @@ int getCost(NODEPOINT p1, NODEPOINT p2) {
     distY *= distY;
 
     sum = distX + distY;
-    return sqrt(sum);
+    return (int)sqrt(sum);
 }
 
 void getAllCost(MAP* map) {
 
     for (int i = 0; i < map->nodePointAmount; i++) { // Iterates every single point
         for (int j = 0; j < map->points[i].connectionN; j++) { // Iterates every connection of every point
-            map->points[i].connections[j].cost = getCost(map->points[i], map->points[map->points[i].connections[j].id]);
+            map->points[i].connections[j].cost = (float)getCost(map->points[i], map->points[map->points[i].connections[j].id]);
         }
     }
 }
@@ -40,7 +40,7 @@ int distancePointToPoint(NODEPOINT startP, NODEPOINT endP) {
 
     sum = distX + distY;
 
-    dist = sqrt(sum);
+    dist = (int)sqrt(sum);
 
     return dist;
 }
@@ -185,10 +185,11 @@ int findPInList(ANODE* list, ASTAR p) {
 ANODE* returnANodePointer(ANODE* mainList, ASTAR currentPoint) {
     while (mainList != NULL) {
         if (mainList->astar.current == currentPoint.current) {
-            return mainList;
+            break;
         }
         mainList = mainList->ptrAstar;
     }
+    return mainList;
 }
 
 void insertInList(ANODE** listen, ASTAR insertion) // Joseba I wanna dieeeeewsasdfasdfasdfsadf "Izan & Urko"
@@ -323,7 +324,7 @@ ANODE* previousItem(ANODE* list, ASTAR deleteitem)
     //Si el que quiero borrar es el primero devuelvo el primero
     if (list->astar.current == deleteitem.current)
     {
-        previous = &list->astar;
+        previous = list;
     }
     else
     {
@@ -332,7 +333,7 @@ ANODE* previousItem(ANODE* list, ASTAR deleteitem)
         {
             if (list->ptrAstar->astar.current == deleteitem.current)
             {
-                previous = &list->astar;
+                previous = list;
                 found = 1;
             }
             else

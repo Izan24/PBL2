@@ -16,8 +16,9 @@ MAP* loadMap() {
 char* mapFileName() {
 	int i = 0, count = 0, counterZeros = 0;
 	char* izenArtx = (char*)malloc(sizeof(char) * 128);
-	CHAR* filename = ChooseProgram();
-	while (filename == -1) {
+	CHAR* filename = NULL;
+	filename = ChooseProgram();
+	while (filename == '\0') {
 		printf("\nNo selesionaste un archivo kabron...");
 		filename = ChooseProgram();
 	}
@@ -38,20 +39,20 @@ char* mapFileName() {
 
 CHAR* ChooseProgram() {
 	OPENFILENAME  ofn;
-	CHAR filename[MAX_PATH];
+	CHAR *filename = (CHAR*)malloc(sizeof(CHAR) * MAX_PATH);
 	defName(filename);
 	memset(&ofn, 0, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
 	ofn.hInstance = NULL;
 	ofn.lpstrFilter = L"JSON files\0*.json\0\0";
-	ofn.lpstrFile = filename;
+	ofn.lpstrFile = (LPWSTR)filename;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = L"Aukeratu mapa";
 	ofn.Flags = OFN_NONETWORKBUTTON | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 	if (!GetOpenFileName(&ofn)) {
 		printf("%lu", CommDlgExtendedError());
-		return -1;
+		return '\0';
 	}
 	else return filename;
 }
@@ -59,7 +60,7 @@ CHAR* ChooseProgram() {
 char* readJSON(char* FileName) {
 	char* buffer = (char*)malloc(sizeof(char) * 65536);
 	FILE* fileJSON = fopen(FileName, "r");
-	if (fileJSON == NULL) return -1;
+	if (fileJSON == NULL) return '\0';
 	fread(buffer, sizeof(char), 65536, fileJSON);
 	fclose(fileJSON);
 	return buffer;

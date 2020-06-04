@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "general.h"
 
-int main() 
+int main(int argv, char* argc)
 {
     MAP* map;
     BUTTON ALL_Buttons[MAX_BUTTON_N];

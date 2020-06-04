@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="src\algorithm.c" />
     <ClCompile Include="src\graphics.c" />
-    <ClCompile Include="src\initApplication.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\mainLoop.c" />
     <ClCompile Include="src\maps.c" />
@@ -32,7 +31,6 @@
     <ClInclude Include="headers\algorithm.h" />
     <ClInclude Include="headers\general.h" />
     <ClInclude Include="headers\graphics.h" />
-    <ClInclude Include="headers\initApplication.h" />
     <ClInclude Include="headers\mainLoop.h" />
     <ClInclude Include="headers\maps.h" />
     <ClInclude Include="headers\sdlDefine.h" />

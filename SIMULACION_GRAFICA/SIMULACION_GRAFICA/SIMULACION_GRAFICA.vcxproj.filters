@@ -27,9 +27,6 @@
     <ClCompile Include="src\userInterface.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\initApplication.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\mainLoop.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\userInterface.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\initApplication.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="headers\mainLoop.h">
