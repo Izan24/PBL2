@@ -1,11 +1,28 @@
-# PBL2
-Lehenengo mailako bigarren PBLa
+# Astar Wheelchairs
 
-Abre SIMULACION_GRAFICA
-ABRE DEBUG Y EL .EXE
-elige el .json que está dentro de maps (Mutriku.json)
+Astar Wheelchair is a visual aplication which allows you to setup destinations to an automatic wheelchair which will
+calculate the shotest path automatically.
 
-El algoritmo irá desde el primer punto hata la playa, pero en futuras versiopnes podrás
-elegir el punto de partida y llegada
+## Installation
 
-Para ejecutar el algoritmo pulsa el boton con la flecha
+Follow the instructions of the installer to install the aplication.
+
+
+## Usage
+
+```C
+<stdlib.h>
+<stdio.h>
+<windows.h>
+<commdlg.h>
+<math.h>
+```SDL
+"sdl/SDL.h"
+"sdl/SDL_image.h"
+"sdl/SDL_mixer.h"
+"sdl/SDL_ttf.h"
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
