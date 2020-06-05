@@ -110,7 +110,7 @@ BOOL checkActions(MAP** map, ANODE** printList, STARTEND** twoPoints, INTERLIST*
                         if ((*boomer)->male == TRUE) (*boomer)->male = FALSE;
                         else (*boomer)->male = TRUE;
 
-                        startPath(*map, *bg, ALL_Buttons, *interestPoints, *printList, *twoPoints, *wheelChair, *boomer, *thId);
+                        closeRequested = startPath(*map, *bg, ALL_Buttons, *interestPoints, *printList, *twoPoints, *wheelChair, *boomer, *thId);
 
                         setAllToRed(*interestPoints);
                         (*twoPoints)->startP = NULL;
@@ -211,7 +211,7 @@ int checkClick(MOUSE_POS position, BUTTON* ALL_Buttons)
     return action;
 }
 
-void startPath(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* interestPoints, ANODE* printList, STARTEND* twoPoints, WHEELCHAIR* wheeelChair, BOOMER* boomer, int thId)
+BOOL startPath(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* interestPoints, ANODE* printList, STARTEND* twoPoints, WHEELCHAIR* wheeelChair, BOOMER* boomer, int thId)
 {
     if (twoPoints->startP != NULL && twoPoints->endP != NULL)
     {
@@ -220,7 +220,7 @@ void startPath(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* intere
 
         printList = execAlgorithm(map, &map->points[thId], twoPoints->startP);
         drawPathDynamic(printList, map);
-        moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1);
+        if (moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1) == TRUE) return TRUE;
 
         //
         boomer->x = 0 - boomer->dim.w;
@@ -228,7 +228,7 @@ void startPath(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* intere
         wheeelChair->boomerOnTop = TRUE;
         printList = execAlgorithm(map, twoPoints->startP, twoPoints->endP);
         drawPathDynamic(printList, map);
-        moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1);
+        if (moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1) == TRUE) return TRUE;
 
         //
         boomer->x = twoPoints->endP->x;
@@ -237,9 +237,9 @@ void startPath(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* intere
         wheeelChair->boomerOnTop = FALSE;
         printList = execAlgorithm(map, twoPoints->endP, &map->points[thId]);
         drawPathDynamic(printList, map);
-        moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1);
+        if (moveWheelChair(map, bg, ALL_Buttons, interestPoints, printList, wheeelChair, boomer, -1) == TRUE) return TRUE;
 
-        //
+        return FALSE;
     }
 }
 
@@ -274,7 +274,7 @@ void verifyMouseOnTop(BUTTON* ALL_Buttons, MOUSE_POS* position)
     }
 }
 
-void moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* interestPoints, ANODE* printList, WHEELCHAIR* wheelChair, BOOMER* boomer, int writePoint)
+BOOL moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* interestPoints, ANODE* printList, WHEELCHAIR* wheelChair, BOOMER* boomer, int writePoint)
 {
 
     int currentX, currentY, nextX, nextY;
@@ -284,6 +284,8 @@ void moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* i
     double angle;
 
     NODEPOINT p1, p2;
+
+    SDL_Event event;
 
     ANODE* pListAux = printList;
 
@@ -309,6 +311,16 @@ void moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* i
         pListAux = pListAux->ptrAstar;
         while (round(wheelChair->x) != nextX || round(wheelChair->y) != nextY)
         {
+
+            if (SDL_PollEvent(&event)) // Chech an action to avoid the windows defender
+            {
+                switch (event.type)
+                {
+                case SDL_QUIT:
+                    return TRUE; // return closerequested true
+                    break;
+                }
+            }
             /*
                 AQUI TENGO QUE HACER QUE SE MUEVA LA SILLA HASTA EL NEXTX E NEXTY
             */
@@ -326,6 +338,8 @@ void moveWheelChair(MAP* map, SDL_Texture* bg, BUTTON* ALL_Buttons, INTERLIST* i
 
         printList = printList->ptrAstar;
     }
+
+    return FALSE;
 }
 
 void unitaryVector(float* x, float* y)
