@@ -64,6 +64,7 @@ BOOL loop(MAP** map)
 
         SDL_RenderClear(rend);
         drawAll(bg, ALL_Buttons, interestPoints, wheelChair, printList, *map, boomer, angle, writePointId);
+        SDL_Delay(1000 / 120);
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 

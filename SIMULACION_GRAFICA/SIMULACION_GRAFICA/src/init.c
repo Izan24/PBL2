@@ -10,8 +10,6 @@ int SDLInit()
         return 1;
     }
 
-    Uint32 render_flags;
-
     window = SDL_CreateWindow("A* WheelChairs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
     SDL_Surface* icon = IMG_Load("../debug/resources/aStaricon.png");
@@ -25,9 +23,7 @@ int SDLInit()
         return 1;
     }
 
-
-    render_flags = SDL_RENDERER_ACCELERATED;
-    rend = SDL_CreateRenderer(window, -1, render_flags);
+    rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     if (!rend)
     {
