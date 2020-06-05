@@ -2,7 +2,6 @@
 #include "JSON-C/json.h"
 #include "loadJSON.h"
 
-
 MAP* loadMap() {
 	MAP* map = (MAP*)malloc(sizeof(MAP));
 	char* filename = mapFileName();

@@ -321,7 +321,6 @@ ANODE* previousItem(ANODE* list, ASTAR deleteitem)
     return(previous);
 }
 
-
 void setPoint(MAP* map, ASTAR* currentPoint, ASTAR* nextPoint, int i) {
     nextPoint->from = currentPoint->current;
     nextPoint->current = map->points[currentPoint->current].connections[i].id;

@@ -1,6 +1,6 @@
 #include "general.h"
 
-int main(int argv, char* argc)
+int main(int argc, char* argv[])
 {
     MAP* map;
 
