@@ -1,6 +1,6 @@
 {
   "mapName": "Mutriku",
-  "IMGPath": "./IMG/Mutriku.png",
+  "IMGPath": "./maps/IMG/Mutriku.png",
   "nodePointAmount": 162,
   "points": [
     {
@@ -38,7 +38,7 @@
       "x": 370,
       "y": 480,
       "id": 2,
-      "connectionN": 2,
+      "connectionN": 3,
       "connections": [
         {
           "id": 1
@@ -1093,7 +1093,7 @@
       "x": 977,
       "y": 207,
       "id": 64,
-      "connectionN": 3,
+      "connectionN": 4,
       "connections": [
         {
           "id": 62
