@@ -161,7 +161,12 @@ void drawText(const char* message)
     int pixelsPerCharacter = 13;
     lenght = strlen(message);
 
+#ifndef LINUX_SISTEMA
     TTF_Font* font = TTF_OpenFont("../resources/fonts/Calibri Regular.TTF", 100);
+#endif // !LINUX_SISTEMA
+#ifdef LINUX_SISTEMA
+    TTF_Font* font = TTF_OpenFont("./resources/fonts/Calibri.ttf", 100);
+#endif
 
     SDL_Rect textLocation;
     textLocation.w = lenght * pixelsPerCharacter;

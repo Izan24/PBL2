@@ -1,7 +1,7 @@
 {
   "mapName": "Mutriku",
   "IMGPath": "./IMG/Mutriku.png",
-  "nodePointAmount": 160,
+  "nodePointAmount": 162,
   "points": [
     {
       "pointType": "Interest",

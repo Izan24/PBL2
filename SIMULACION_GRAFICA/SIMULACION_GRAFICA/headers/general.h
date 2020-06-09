@@ -13,8 +13,10 @@ typedef enum boolean{FALSE, TRUE}BOOL; // A simple boolean enum
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifndef LINUX_SISTEMA
 #include <windows.h>
 #include <commdlg.h>
+#endif // !LINUX_SISTEMA
 #include <math.h>
 #include "sdlDefine.h"
 #include "loadJSON.h"

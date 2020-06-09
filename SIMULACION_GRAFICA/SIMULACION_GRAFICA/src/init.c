@@ -12,7 +12,16 @@ int SDLInit()
 
     window = SDL_CreateWindow("A* WheelChairs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
+#ifndef LINUX_SISTEMA
+
     SDL_Surface* icon = IMG_Load("../debug/resources/aStaricon.png");
+#endif // !LINUX_SISTEMA
+
+#ifdef LINUX_SISTEMA
+    SDL_Surface* icon = IMG_Load("./resources/aStaricon.png");
+#endif // LINUX_SISTEMA
+
+
     SDL_SetWindowIcon(window, icon);
     SDL_FreeSurface(icon);
 
@@ -22,8 +31,15 @@ int SDLInit()
         SDL_Quit();
         return 1;
     }
+#ifndef LINUX_SISTEMA
 
     rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+#endif // !LINUS_SISTEMA
+
+#ifdef LINUX_SISTEMA
+    Uint32 flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+    rend = SDL_CreateRenderer(window, -1, flags);
+#endif // LINUX_SISTEMA
 
     if (!rend)
     {
@@ -42,6 +58,8 @@ int SDLInit()
     return 0;
 }
 
+#ifndef LINUX_SISTEMA
+
 struct Cursors initCursor() {
     struct Cursors cursor;
     SDL_Surface* cursorSurf = IMG_Load("./resources/interface/cursor1.png");
@@ -52,6 +70,22 @@ struct Cursors initCursor() {
     SDL_FreeSurface(cursorSurf);
     return cursor;
 }
+#endif // !LINUX_SISTEMA
+
+#ifdef LINUX_SISTEMA
+struct Cursors initCursor() {
+    struct Cursors cursor;
+    SDL_Surface* cursorSurf = IMG_Load("./resources/interface/cursor1.png");
+    cursor.arrow = SDL_CreateColorCursor(cursorSurf, 0, 0);
+    SDL_FreeSurface(cursorSurf);
+    cursorSurf = IMG_Load("./resources/interface/cursor2.png");
+    cursor.hand = SDL_CreateColorCursor(cursorSurf, 0, 0);
+    SDL_FreeSurface(cursorSurf);
+    return cursor;
+}
+#endif //
+
+
 
 SDL_Texture* bgInit(const char* img)
 {
@@ -69,6 +103,7 @@ SDL_Texture* bgInit(const char* img)
 
 void initButtons(BUTTON* ALL_Buttons)
 {
+#ifndef LINUX_SISTEMA
 
     ALL_Buttons[0].normal_ver = bgInit("../resources/Button_menu.png");
     ALL_Buttons[0].grey_ver = bgInit("../resources/Button_menu_grey.png");
@@ -83,6 +118,24 @@ void initButtons(BUTTON* ALL_Buttons)
     ALL_Buttons[4].grey_ver = bgInit("../resources/Swap_button_grey.png");
 
     ALL_Buttons[5].normal_ver = bgInit("../resources/error_message.png");
+#endif // !LINUX_SISTEMA
+
+#ifdef LINUX_SISTEMA
+    ALL_Buttons[0].normal_ver = bgInit("./resources/Button_menu.png");
+    ALL_Buttons[0].grey_ver = bgInit("./resources/Button_menu_grey.png");
+    ALL_Buttons[1].normal_ver = bgInit("./resources/Button_points.png");
+    ALL_Buttons[1].grey_ver = bgInit("./resources/Button_points_grey.png");
+    ALL_Buttons[2].normal_ver = bgInit("./resources/Button_go.png");
+    ALL_Buttons[2].grey_ver = bgInit("./resources/Button_go_grey.png");
+
+    ALL_Buttons[3].normal_ver = bgInit("./resources/exit_button.png");
+    ALL_Buttons[3].grey_ver = bgInit("./resources/exit_button_grey.png");
+    ALL_Buttons[4].normal_ver = bgInit("./resources/Swap_button.png");
+    ALL_Buttons[4].grey_ver = bgInit("./resources/Swap_button_grey.png");
+
+    ALL_Buttons[5].normal_ver = bgInit("./resources/error_message.png");
+#endif // LINUX_SISTEMA
+
 
     buttonSetDim(ALL_Buttons);
 }
@@ -150,9 +203,19 @@ INTERLIST* initInterestpoints(MAP* map)
             interestPoint.x = map->points[i].x;
             interestPoint.y = map->points[i].y;
             interestPoint.type = RED;
+#ifndef LINUX_SISTEMA
             interestPoint.textureRed = bgInit("../resources/Button_red_locate.png");
             interestPoint.textureStart = bgInit("../resources/Button_green_locate.png");
             interestPoint.textureEnd = bgInit("../resources/Button_purple_locate.png");
+#endif // !LINUX_SISTEMA
+
+
+#ifdef LINUX_SISTEMA
+            interestPoint.textureRed = bgInit("./resources/Button_red_locate.png");
+            interestPoint.textureStart = bgInit("./resources/Button_green_locate.png");
+            interestPoint.textureEnd = bgInit("./resources/Button_purple_locate.png");
+#endif // LINUX_SISTEMA
+
             interestPoint.dim.w = 20;
             interestPoint.dim.h = 27;
             interestPoint.dim.x = interestPoint.x - 10;
@@ -168,8 +231,15 @@ void initWheelChair(WHEELCHAIR* wheelChair)
 {
     wheelChair->dim.w = 40;
     wheelChair->dim.h = 40;
+#ifndef LINUX_SISTEMA
     wheelChair->textureNoBoomer = bgInit("../resources/wheelNoboomer.png");
     wheelChair->textureWithBoomer = bgInit("../resources/wheelChair.png");
+#endif
+
+#ifdef LINUX_SISTEMA
+    wheelChair->textureNoBoomer = bgInit("./resources/wheelNoboomer.png");
+    wheelChair->textureWithBoomer = bgInit("./resources/wheelChair.png");
+#endif
 }
 
 void initBoomer(BOOMER* boomer)
@@ -177,8 +247,16 @@ void initBoomer(BOOMER* boomer)
     boomer->dim.h = 40;
     boomer->dim.w = 30;
     boomer->male = TRUE;
+#ifndef LINUX_SISTEMA
 
     boomer->textureMale = bgInit("../resources/boomerMale.png");
     boomer->textureFemale = bgInit("../resources/boomerFemale.png");
+#endif // !LINUX_SISTEMA
+
+#ifdef LINUX_SISTEMA
+    boomer->textureMale = bgInit("./resources/boomerMale.png");
+    boomer->textureFemale = bgInit("./resources/boomerFemale.png");
+#endif // !LINUX_SISTEMA
+
 }
 

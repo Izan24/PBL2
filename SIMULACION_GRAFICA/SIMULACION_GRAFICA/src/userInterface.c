@@ -7,8 +7,20 @@ void intro()
     SDL_Texture* logo;
     SDL_Texture* logoUnfocus;
 
+
+#ifndef LINUX_SISTEMA
+
     logo = bgInit("../resources/backgrounds/introIMG.png");
     logoUnfocus = bgInit("../resources/backgrounds/introIMGunfocused.png");
+
+#endif // !LINUX_SISTEMA
+
+#ifdef LINUX_SISTEMA
+
+    logo = bgInit("./resources/backgrounds/introIMG.png");
+    logoUnfocus = bgInit("./resources/backgrounds/introIMGunfocused.png");
+
+#endif // LINUX_SISTEMA
 
     SDL_SetTextureBlendMode(logoUnfocus, SDL_BLENDMODE_BLEND);
     while (alpha > 0)
@@ -19,7 +31,11 @@ void intro()
         SDL_RenderCopy(rend, logoUnfocus, NULL, NULL);
         alpha -= 2;
         SDL_RenderPresent(rend);
+#ifndef LINUX_SISTEMA
+
         SDL_Delay(1000 / 60);
+#endif // !LINUX_SISTEMA
+
     }
     SDL_RenderCopy(rend, logo, NULL, NULL);
     SDL_RenderPresent(rend);

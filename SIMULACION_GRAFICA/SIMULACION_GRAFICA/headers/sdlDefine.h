@@ -3,7 +3,7 @@
 
 #include "sdl/SDL.h"
 #include "sdl/SDL_image.h"
-#include "sdl/SDL_mixer.h"
+//#include "sdl/SDL_mixer.h"
 #include "sdl/SDL_ttf.h"
 
 SDL_Renderer* rend; // A global variable for the renderer from the SDL

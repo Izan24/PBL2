@@ -54,7 +54,7 @@ typedef struct map {
 
 
 
-
+#ifndef LINUX_SISTEMA
 
 // This function loads the map using the other functions bellow.
 MAP* loadMap();
@@ -68,8 +68,24 @@ CHAR* ChooseProgram();
 // Opens the file specified on filename, reads it and returns its value in a char buffer.
 char* readJSON(char* FileName);
 
-// DEBUGGING Prints the content of a MAP struct.
-void printMap(MAP* map);
+// Parses a JSON buffer into useful structs.
+MAP* parseJSON(char* buffer);
+
+//Sets the default name for the search bar.
+void defName(CHAR* filename);
+
+#endif
+
+#ifdef LINUX_SISTEMA
+
+// This function loads the map using the other functions bellow.
+MAP* loadMap();
+
+// Opens a dialog box to select a file and returns its name along with its path.
+char* mapFileName(int n);
+
+// Opens the file specified on filename, reads it and returns its value in a char buffer.
+char* readJSON(char* FileName);
 
 // Parses a JSON buffer into useful structs.
 MAP* parseJSON(char* buffer);
@@ -77,6 +93,10 @@ MAP* parseJSON(char* buffer);
 //Sets the default name for the search bar.
 void defName(CHAR* filename);
 
+#endif
+
+// DEBUGGING Prints the content of a MAP struct.
+void printMap(MAP* map);
 
 
 #endif // !MAPS_H

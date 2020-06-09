@@ -64,7 +64,11 @@ BOOL loop(MAP** map)
 
         SDL_RenderClear(rend);
         drawAll(bg, ALL_Buttons, interestPoints, wheelChair, printList, *map, boomer, angle, writePointId);
+
+#ifndef LINUX_SISTEMA
         SDL_Delay(1000 / 120);
+#endif // !LINUX_SISTEMA
+
         SDL_RenderPresent(rend);
     } while (closeRequested == FALSE);
 
