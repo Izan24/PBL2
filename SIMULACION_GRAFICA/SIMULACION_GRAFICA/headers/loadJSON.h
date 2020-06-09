@@ -89,10 +89,6 @@ char* readJSON(char* FileName);
 
 // Parses a JSON buffer into useful structs.
 MAP* parseJSON(char* buffer);
-
-//Sets the default name for the search bar.
-void defName(CHAR* filename);
-
 #endif
 
 // DEBUGGING Prints the content of a MAP struct.

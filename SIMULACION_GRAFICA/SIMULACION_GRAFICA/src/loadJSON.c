@@ -188,15 +188,6 @@ char* mapFileName(int n) {
 	}
 }
 
-char* readJSON(char* FileName) {
-	char* buffer = (char*)malloc(sizeof(char) * 65536);
-	FILE* fileJSON = fopen(FileName, "r");
-	if (fileJSON == NULL) return '\0';
-	fread(buffer, sizeof(char), 65536, fileJSON);
-	fclose(fileJSON);
-	return buffer;
-}
-
 MAP* parseJSON(char* buffer) {
 
 	MAP* map = (MAP*)malloc(sizeof(MAP));
