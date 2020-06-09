@@ -1,6 +1,6 @@
 {
    "mapName":"Getaria",
-   "IMGPath":"./maps/IMG/Getaria.png",
+   "IMGPath":"./IMG/Getaria.png",
    "nodePointAmount": 70,
    "points":[
       {
