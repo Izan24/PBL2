@@ -28,6 +28,7 @@ Select "SIMULACION_GRAFICA", then "Debug" and download the missing folders.
 "sdl/SDL_image.h"
 "sdl/SDL_mixer.h"
 "sdl/SDL_ttf.h"
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
